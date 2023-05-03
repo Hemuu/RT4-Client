@@ -50,6 +50,13 @@ public abstract class Plugin {
      */
     public void Update() {}
 
+
+    /**
+     * Update() is called once every 100 client loops.
+     * This should be used for things that do need to update often during runtime.
+     */
+    public void QuickUpdate() {}
+
     /**
      * PlayerOverheadDraw() is called once per frame, for every player on the screen. :) Expensive.
      * @param screenX the X coordinate on the screen for overhead drawing
@@ -91,6 +98,11 @@ public abstract class Plugin {
      * OnLogin is called when the client processes a login.
      */
     public void OnLogin() {}
+
+    /**
+     * OnLogin is called AFTER the client processes a login.
+     */
+    public void AfterLogin() {}
 
     /**
      * OnLogout is called when the client logs out. This should be used to clear player-relevant plugin state.

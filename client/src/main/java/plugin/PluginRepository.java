@@ -135,6 +135,11 @@ public class PluginRepository {
         loadedPlugins.values().forEach(Plugin::Update);
     }
 
+    public static void QuickUpdate() {
+        loadedPlugins.values().forEach(Plugin::QuickUpdate);
+    }
+
+
     public static void Draw() {
         loadedPlugins.values().forEach(Plugin::_draw);
     }
@@ -181,4 +186,9 @@ public class PluginRepository {
     public static void OnLogin() {
         loadedPlugins.values().forEach((plugin) -> plugin.OnLogin());
     }
+
+    public static void AfterLogin() {
+        loadedPlugins.values().forEach((plugin) -> plugin.AfterLogin());
+    }
+
 }

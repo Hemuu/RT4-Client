@@ -316,14 +316,21 @@ public final class client extends GameShell {
 
 	@OriginalMember(owner = "client!pl", name = "a", descriptor = "(II)V")
 	public static void setGameState(@OriginalArg(0) int arg0) {
+		System.out.println("Setting game state to " + arg0);
 		if (gameState == arg0) {
+			System.out.println("Game state already " + arg0 + ", returning");
 			return;
 		}
 		if (gameState == 0) {
 			LoadingBarAwt.clear();
 		}
 		if (gameState == 30) {
+			System.out.println("Game state changed to 30 (logging in)");
 			PluginRepository.OnLogin();
+		}
+		if (gameState == 10) {
+			System.out.println("Game state changed to 10 (logged in)");
+			PluginRepository.AfterLogin();
 		}
 		if (arg0 == 40) {
 			LoginManager.clear();
@@ -1591,6 +1598,9 @@ public final class client extends GameShell {
 			aRandom1.setSeed(MiniMenu.gregorianDateSeed);
 			PluginRepository.Update();
 		}
+		if (loop % 100 == 0) {
+			PluginRepository.QuickUpdate();
+		}
 		this.js5NetworkLoop();
 		if (js5MasterIndex != null) {
 			js5MasterIndex.method179();
@@ -1625,11 +1635,12 @@ public final class client extends GameShell {
 		} else if (gameState == 40) {
 			LoginManager.loop();
 			if (LoginManager.reply != -3) {
-				if (LoginManager.reply == 15) {
-					LoginManager.reconnect();
-				} else if (LoginManager.reply != 2) {
-					LoginManager.processLogout();
-				}
+				LoginManager.reconnect();
+				//if (LoginManager.reply == 15) {
+				//	LoginManager.reconnect();
+				//} else if (LoginManager.reply != 2) {
+				//	LoginManager.processLogout();
+				//}
 			}
 		}
 	}
