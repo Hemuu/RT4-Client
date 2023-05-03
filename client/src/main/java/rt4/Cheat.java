@@ -6,6 +6,8 @@ import org.openrs2.deob.annotation.Pc;
 import plugin.PluginRepository;
 
 public class Cheat {
+
+	public static final JagString COMMAND_LOWCPU = JagString.parse("::lowcpu");
 	@OriginalMember(owner = "client!p", name = "f", descriptor = "Lclient!na;")
 	public static final JagString JS5DROP = JagString.parse("::serverjs5drop");
 	@OriginalMember(owner = "client!v", name = "d", descriptor = "Lclient!na;")
@@ -202,6 +204,9 @@ public class Cheat {
 			}
 			if (arg0.startsWith(COMMAND_FPS) && client.modeWhere != 0) {
 				GameShell.setFpsTarget(arg0.substring(6).parseInt());
+			}
+			if (arg0.startsWith(COMMAND_LOWCPU) && client.modeWhere != 0) {
+				GameShell.enableLowCpu();
 			}
 			if (arg0.equalsIgnoreCase(ERROR_TEST)) {
 				throw new RuntimeException();

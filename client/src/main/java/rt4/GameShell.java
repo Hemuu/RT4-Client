@@ -136,6 +136,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	public static long renderDelta = 0;
 
+	private static boolean lowCPU;
+
 	@OriginalMember(owner = "client!rc", name = "providesignlink", descriptor = "(Lsignlink!ll;)V")
 	public static void providesignlink(@OriginalArg(0) SignLink signLink) {
 		GameShell.signLink = signLink;
@@ -266,6 +268,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			}
 		} catch (@Pc(132) Exception local132) {
 		}
+	}
+
+	public static void enableLowCpu() {
+		lowCPU = true;
 	}
 
 	@OriginalMember(owner = "client!rc", name = "focusLost", descriptor = "(Ljava/awt/event/FocusEvent;)V")
@@ -613,6 +619,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			long lastUpdateTime = 0;
 			long lastDrawTime = 0;
 			while (killTime == 0L) {
+				if (lowCPU) {
+					Thread.sleep(1);
+				}
 				if (GameShell.killTime > MonotonicClock.currentTimeMillis()) {
 					break;
 				}
