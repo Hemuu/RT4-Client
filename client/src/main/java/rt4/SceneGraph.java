@@ -216,9 +216,13 @@ public class SceneGraph {
 		if (level < 3 && (renderFlags[1][x][z] & 0x2) == 2) {
 			virtualLevel = level + 1;
 		}
-		@Pc(91) int heightZ0 = xFine2 * tileHeights[virtualLevel][x + 1][z + 1] + tileHeights[virtualLevel][x][z + 1] * (128 - xFine2) >> 7;
-		@Pc(118) int heightZ1 = xFine2 * tileHeights[virtualLevel][x + 1][z] + (128 - xFine2) * tileHeights[virtualLevel][x][z] >> 7;
-		return zFine2 * heightZ0 + (128 - zFine2) * heightZ1 >> 7;
+		try {
+			@Pc(91) int heightZ0 = xFine2 * tileHeights[virtualLevel][x + 1][z + 1] + tileHeights[virtualLevel][x][z + 1] * (128 - xFine2) >> 7;
+			@Pc(118) int heightZ1 = xFine2 * tileHeights[virtualLevel][x + 1][z] + (128 - xFine2) * tileHeights[virtualLevel][x][z] >> 7;
+			return zFine2 * heightZ0 + (128 - zFine2) * heightZ1 >> 7;
+		} catch (IndexOutOfBoundsException e) {
+			return 0;
+		}
 	}
 
 	@OriginalMember(owner = "client!ih", name = "a", descriptor = "(III)Lclient!jh;")

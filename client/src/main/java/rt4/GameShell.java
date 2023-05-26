@@ -136,7 +136,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	public static long renderDelta = 0;
 
-	private static boolean lowCPU;
+	private static boolean lowCPU = true;
 
 	@OriginalMember(owner = "client!rc", name = "providesignlink", descriptor = "(Lsignlink!ll;)V")
 	public static void providesignlink(@OriginalArg(0) SignLink signLink) {
@@ -270,8 +270,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		}
 	}
 
-	public static void enableLowCpu() {
-		lowCPU = true;
+	public static void toggleLowCpu() {
+		lowCPU = !lowCPU;
 	}
 
 	@OriginalMember(owner = "client!rc", name = "focusLost", descriptor = "(Ljava/awt/event/FocusEvent;)V")

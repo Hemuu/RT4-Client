@@ -711,7 +711,8 @@ public class Protocol {
 		@Pc(23) int i;
 		for (i = 0; i < removedCount; i++) {
 			@Pc(30) int local30 = removedIds[i];
-			if (client.loop != PlayerList.players[local30].lastSeenLoop) {
+			Player player = PlayerList.players[local30];
+			if (player != null && client.loop != player.lastSeenLoop) {
 				if (PlayerList.players[local30].soundRadius > 0) {
 					AreaSoundManager.remove(PlayerList.players[local30]);
 				}

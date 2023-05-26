@@ -42,8 +42,7 @@ public class plugin extends Plugin {
         if (!isEnabled) return;
         if (!hasReconnected) return;
         System.out.println("Update called. Running script: " + this.scriptName);
-        API.DispatchCommand("::script " + this.scriptName);
-        //hasReconnected = false;
+        API.DispatchCommand("::resumescript " + this.scriptName);
     }
 
     @Override

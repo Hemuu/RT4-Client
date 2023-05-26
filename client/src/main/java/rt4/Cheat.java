@@ -206,7 +206,7 @@ public class Cheat {
 				GameShell.setFpsTarget(arg0.substring(6).parseInt());
 			}
 			if (arg0.startsWith(COMMAND_LOWCPU) && client.modeWhere != 0) {
-				GameShell.enableLowCpu();
+				GameShell.toggleLowCpu();
 			}
 			if (arg0.equalsIgnoreCase(ERROR_TEST)) {
 				throw new RuntimeException();
