@@ -214,6 +214,19 @@ public final class client extends GameShell {
 	@OriginalMember(owner = "client!ah", name = "t", descriptor = "I")
 	public static int anInt986;
 
+	public static int LOADSTATE_0_INIT = 0;
+	public static int LOADSTATE_10_LOAD_GAMEWORLD = 10;
+	public static int LOADSTATE_30_INIT_NETWORK   = 30;
+	public static int LOADSTATE_40_CHECK_UPDATES  = 40;
+	public static int LOADSTATE_45_LOAD_SOUND     = 45;
+	public static int LOADSTATE_50_LOAD_FONTS     = 50;
+	public static int LOADSTATE_60_LOAD_TITLE     = 60;
+	public static int LOADSTATE_65_OPEN_TITLE     = 65;
+	public static int LOADSTATE_70_LOAD_CONFIG    = 70;
+	public static int LOADSTATE_80_LOAD_SPRITES   = 80;
+	public static int LOADSTATE_90_LOAD_TEXTURES  = 90;
+	public static int LOADSTATE_100_LOAD_FLAMES   = 100;
+
 	@OriginalMember(owner = "client!client", name = "main", descriptor = "([Ljava/lang/String;)V")
 	public static void main(@OriginalArg(0) String[] arg0) {
 		try {
@@ -1197,11 +1210,17 @@ public final class client extends GameShell {
 			}
 			if (js5NetQueue.errors >= 4 && (gameState == 0 || gameState == 5)) {
 				if (js5NetQueue.response == 7 || js5NetQueue.response == 9) {
-					this.error("js5connect_full");
+					this.error("js5connect_full (" + js5NetQueue.response + ")");
+					System.out.println("  gamestate=" + gameState);
+					System.out.println("  errors=" + js5NetQueue.errors);
 				} else if (js5NetQueue.response > 0) {
-					this.error("js5connect");
+					this.error("js5connect (" + js5NetQueue.response + ")");
+					System.out.println("  errors=" + js5NetQueue.errors);
+					System.out.println("  gamestate=" + gameState);
 				} else {
-					this.error("js5io");
+					this.error("js5io (" + js5NetQueue.response + ")");
+					System.out.println("  gamestate=" + gameState);
+					System.out.println("  errors=" + js5NetQueue.errors);
 				}
 				gameState = 1000;
 				return;
@@ -1279,7 +1298,7 @@ public final class client extends GameShell {
 		}
 
 		@Pc(43) int i;
-		if (mainLoadState == 0) {
+		if (mainLoadState == LOADSTATE_0_INIT) {
 			@Pc(34) Runtime runtime = Runtime.getRuntime();
 			i = (int) (0L / 1024L);
 			@Pc(46) long now = MonotonicClock.currentTimeMillis();
@@ -1295,21 +1314,21 @@ public final class client extends GameShell {
 				mainLoadSecondaryText = LocalizedText.MAINLOAD0;
 			} else {
 				mainLoadSecondaryText = LocalizedText.MAINLOAD0B;
-				mainLoadState = 10;
+				mainLoadState = LOADSTATE_10_LOAD_GAMEWORLD;
 				mainLoadPercentage = 5;
 			}
 			return;
 		}
 		@Pc(98) int percentage;
-		if (mainLoadState == 10) {
+		if (mainLoadState == LOADSTATE_10_LOAD_GAMEWORLD) {
 			LightingManager.method2392();
 			for (percentage = 0; percentage < 4; percentage++) {
 				PathFinder.collisionMaps[percentage] = new CollisionMap(104, 104);
 			}
 			mainLoadPercentage = 10;
-			mainLoadState = 30;
+			mainLoadState = LOADSTATE_30_INIT_NETWORK;
 			mainLoadSecondaryText = LocalizedText.MAINLOAD10B;
-		} else if (mainLoadState == 30) {
+		} else if (mainLoadState == LOADSTATE_30_INIT_NETWORK) {
 			if (js5MasterIndex == null) {
 				js5MasterIndex = new Js5MasterIndex(js5NetQueue, js5CacheQueue);
 			}
@@ -1344,12 +1363,12 @@ public final class client extends GameShell {
 				js5Archive27 = createJs5(false, true, true, 27);
 				mainLoadPercentage = 15;
 				mainLoadSecondaryText = LocalizedText.MAINLOAD30B;
-				mainLoadState = 40;
+				mainLoadState = LOADSTATE_40_CHECK_UPDATES;
 			} else {
 				mainLoadSecondaryText = LocalizedText.MAINLOAD30;
 				mainLoadPercentage = 12;
 			}
-		} else if (mainLoadState == 40) {
+		} else if (mainLoadState == LOADSTATE_40_CHECK_UPDATES) {
 			percentage = 0;
 			for (i = 0; i < 28; i++) {
 				percentage += js5Providers[i].getIndexPercentageComplete() * JS5_ARCHIVE_WEIGHTS[i] / 100;
@@ -1360,14 +1379,14 @@ public final class client extends GameShell {
 				Sprites.init(js5Archive8);
 				TitleScreen.init(js5Archive8);
 				Flames.init(js5Archive8);
-				mainLoadState = 45;
+				mainLoadState = LOADSTATE_45_LOAD_SOUND;
 			} else {
 				if (percentage != 0) {
 					mainLoadSecondaryText = JagString.concatenate(new JagString[]{LocalizedText.CHECKING_FOR_UPDATES, JagString.parseInt(percentage), JagString.PERCENT_SIGN});
 				}
 				mainLoadPercentage = 20;
 			}
-		} else if (mainLoadState == 45) {
+		} else if (mainLoadState == LOADSTATE_45_LOAD_SOUND) {
 			AudioChannel.init(Preferences.stereo);
 			musicStream = new MidiPcmStream();
 			musicStream.init();
@@ -1380,37 +1399,37 @@ public final class client extends GameShell {
 			resampler = new PcmResampler(22050, AudioChannel.sampleRate);
 			MusicPlayer.titleSong = js5Archive6.getGroupId(TITLE_SONG);
 			mainLoadPercentage = 30;
-			mainLoadState = 50;
+			mainLoadState = LOADSTATE_50_LOAD_FONTS;
 			mainLoadSecondaryText = LocalizedText.MAINLOAD45B;
-		} else if (mainLoadState == 50) {
+		} else if (mainLoadState == LOADSTATE_50_LOAD_FONTS) {
 			percentage = Fonts.getReady(js5Archive8, js5Archive13);
 			i = Fonts.getTotal();
 			if (percentage >= i) {
 				mainLoadSecondaryText = LocalizedText.MAINLOAD50B;
 				mainLoadPercentage = 35;
-				mainLoadState = 60;
+				mainLoadState = LOADSTATE_60_LOAD_TITLE;
 			} else {
 				mainLoadSecondaryText = JagString.concatenate(new JagString[]{LocalizedText.MAINLOAD50, JagString.parseInt(percentage * 100 / i), JagString.PERCENT_SIGN});
 				mainLoadPercentage = 35;
 			}
-		} else if (mainLoadState == 60) {
+		} else if (mainLoadState == LOADSTATE_60_LOAD_TITLE) {
 			percentage = TitleScreen.getReady(js5Archive8);
 			i = TitleScreen.getTotal();
 			if (i <= percentage) {
 				mainLoadSecondaryText = LocalizedText.MAINLOAD60B;
-				mainLoadState = 65;
+				mainLoadState = LOADSTATE_65_OPEN_TITLE;
 				mainLoadPercentage = 40;
 			} else {
 				mainLoadSecondaryText = JagString.concatenate(new JagString[]{LocalizedText.MAINLOAD60, JagString.parseInt(percentage * 100 / i), JagString.PERCENT_SIGN});
 				mainLoadPercentage = 40;
 			}
-		} else if (mainLoadState == 65) {
+		} else if (mainLoadState == LOADSTATE_65_OPEN_TITLE) {
 			Fonts.load(js5Archive13, js5Archive8);
 			mainLoadPercentage = 45;
 			mainLoadSecondaryText = LocalizedText.MAINLOAD65B;
 			setGameState(5);
-			mainLoadState = 70;
-		} else if (mainLoadState == 70) {
+			mainLoadState = LOADSTATE_70_LOAD_CONFIG;
+		} else if (mainLoadState == LOADSTATE_70_LOAD_CONFIG) {
 			js5Archive2.fetchAll();
 			percentage = js5Archive2.getPercentageComplete();
 			js5Archive16.fetchAll();
@@ -1458,12 +1477,12 @@ public final class client extends GameShell {
 				mainLoadPercentage = 50;
 				mainLoadSecondaryText = LocalizedText.MAINLOAD70B;
 				Equipment.init();
-				mainLoadState = 80;
+				mainLoadState = LOADSTATE_80_LOAD_SPRITES;
 			} else {
 				mainLoadSecondaryText = JagString.concatenate(new JagString[]{LocalizedText.MAINLOAD70, JagString.parseInt(percentage / 11), JagString.PERCENT_SIGN});
 				mainLoadPercentage = 50;
 			}
-		} else if (mainLoadState == 80) {
+		} else if (mainLoadState == LOADSTATE_80_LOAD_SPRITES) {
 			percentage = Sprites.getReady(js5Archive8);
 			i = Sprites.total();
 			if (i > percentage) {
@@ -1471,11 +1490,11 @@ public final class client extends GameShell {
 				mainLoadPercentage = 60;
 			} else {
 				Sprites.load(js5Archive8);
-				mainLoadState = 90;
+				mainLoadState = LOADSTATE_90_LOAD_TEXTURES;
 				mainLoadPercentage = 60;
 				mainLoadSecondaryText = LocalizedText.MAINLOAD80B;
 			}
-		} else if (mainLoadState == 90) {
+		} else if (mainLoadState == LOADSTATE_90_LOAD_TEXTURES) {
 			if (js5Archive26.fetchAll()) {
 				@Pc(951) Js5GlTextureProvider textureProvider = new Js5GlTextureProvider(js5Archive9, js5Archive26, js5Archive8, 20, !Preferences.highDetailTextures);
 				Rasteriser.unpackTextures(textureProvider);
@@ -1492,13 +1511,13 @@ public final class client extends GameShell {
 					Rasteriser.setBrightness(0.6F);
 				}
 				mainLoadSecondaryText = LocalizedText.MAINLOAD90B;
-				mainLoadState = 100;
+				mainLoadState = LOADSTATE_100_LOAD_FLAMES;
 				mainLoadPercentage = 70;
 			} else {
 				mainLoadSecondaryText = JagString.concatenate(new JagString[]{LocalizedText.MAINLOAD90, JagString.parseInt(js5Archive26.getPercentageComplete()), JagString.PERCENT_SIGN});
 				mainLoadPercentage = 70;
 			}
-		} else if (mainLoadState == 100) {
+		} else if (mainLoadState == LOADSTATE_100_LOAD_FLAMES) {
 			if (Flames.isReady(js5Archive8)) {
 				mainLoadState = 110;
 			}
