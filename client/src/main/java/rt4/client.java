@@ -549,7 +549,7 @@ public final class client extends GameShell {
 	}
 
 	@OriginalMember(owner = "client!tk", name = "a", descriptor = "(Z)V")
-	public static void method4221() {
+	public static void maybeReset() {
 		Protocol.anInt4762 = 0;
 		Protocol.prevFocus = true;
 		Mouse.prevClickTime = 0L;
@@ -629,14 +629,14 @@ public final class client extends GameShell {
 			VarcDomain.varcs[local3506] = -1;
 		}
 		if (InterfaceList.topLevelInterface != -1) {
-			InterfaceList.method2275(InterfaceList.topLevelInterface);
+			InterfaceList.unload(InterfaceList.topLevelInterface);
 		}
 		for (@Pc(3755) ComponentPointer local3755 = (ComponentPointer) InterfaceList.openInterfaces.head(); local3755 != null; local3755 = (ComponentPointer) InterfaceList.openInterfaces.next()) {
 			InterfaceList.closeInterface(true, local3755);
 		}
 		InterfaceList.topLevelInterface = -1;
 		InterfaceList.openInterfaces = new HashTable(8);
-		InterfaceList.method1287();
+		InterfaceList.initComponents();
 		Cs1ScriptRunner.aClass13_10 = null;
 		Cs1ScriptRunner.aBoolean108 = false;
 		MiniMenu.size = 0;

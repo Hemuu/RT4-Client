@@ -536,7 +536,7 @@ public class LoginManager {
 				Protocol.socket.read(0, Protocol.length, Protocol.inboundBuffer.data);
 				reply = 2;
 				step = 0;
-				client.method4221();
+				client.maybeReset();
 				SceneGraph.centralZoneX = -1;
 				Protocol.readRebuildPacket(false);
 				Protocol.opcode = -1;

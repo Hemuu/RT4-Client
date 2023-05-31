@@ -690,10 +690,10 @@ public class Cs1ScriptRunner {
 													}
 												}
 											} else if (component.invSprite != null && local270 < 20) {
-												@Pc(1381) Sprite local1381 = component.method482(local270);
-												if (local1381 != null) {
-													local1381.render(x, y);
-												} else if (Component.aBoolean72) {
+												@Pc(1381) Sprite sprite = component.loadSprite(local270);
+												if (sprite != null) {
+													sprite.render(x, y);
+												} else if (Component.shouldRedraw) {
 													InterfaceList.redraw(component);
 												}
 											}
@@ -739,10 +739,10 @@ public class Cs1ScriptRunner {
 									}
 									PluginRepository.ComponentDraw(i, component, local123, local114);
 								} else {
-									@Pc(1921) Font local1921;
+									@Pc(1921) Font font;
 									if (component.type == 4) {
-										local1921 = component.method491(Sprites.nameIcons);
-										if (local1921 != null) {
+										font = component.loadFont(Sprites.nameIcons);
+										if (font != null) {
 											@Pc(1934) JagString local1934 = component.text;
 											if (isTrue(component)) {
 												local276 = component.activeColor;
@@ -775,9 +775,9 @@ public class Cs1ScriptRunner {
 											if (!component.if3) {
 												local1934 = interpolate(component, local1934);
 											}
-											local1921.drawInterfaceText(local1934, local123, local114, component.width, component.height, local276, component.shadowed ? 0 : -1, component.halign, component.valign, component.vpadding);
+											font.drawInterfaceText(local1934, local123, local114, component.width, component.height, local276, component.shadowed ? 0 : -1, component.halign, component.valign, component.vpadding);
 											PluginRepository.ComponentDraw(i, component, local123, local114);
-										} else if (Component.aBoolean72) {
+										} else if (Component.shouldRedraw) {
 											InterfaceList.redraw(component);
 										}
 									} else if (component.type == 5) {
@@ -873,14 +873,14 @@ public class Cs1ScriptRunner {
 													}
 													PluginRepository.ComponentDraw(i, component, local123, local114);
 												}
-											} else if (Component.aBoolean72) {
+											} else if (Component.shouldRedraw) {
 												InterfaceList.redraw(component);
 											}
 										} else {
 											sprite = component.method489(isTrue(component));
 											if (sprite != null) {
 												sprite.render(local123, local114);
-											} else if (Component.aBoolean72) {
+											} else if (Component.shouldRedraw) {
 												InterfaceList.redraw(component);
 											}
 										}
@@ -923,13 +923,13 @@ public class Cs1ScriptRunner {
 												}
 											} else if (local276 == -1) {
 												local2589 = component.method488(-1, null, -1, 0, local2587, PlayerList.self.appearance);
-												if (local2589 == null && Component.aBoolean72) {
+												if (local2589 == null && Component.shouldRedraw) {
 													InterfaceList.redraw(component);
 												}
 											} else {
 												@Pc(2689) SeqType local2689 = SeqTypeList.get(local276);
 												local2589 = component.method488(component.anInt496, local2689, component.anInt510, component.anInt500, local2587, PlayerList.self.appearance);
-												if (local2589 == null && Component.aBoolean72) {
+												if (local2589 == null && Component.shouldRedraw) {
 													InterfaceList.redraw(component);
 												}
 											}
@@ -993,9 +993,9 @@ public class Cs1ScriptRunner {
 											PluginRepository.ComponentDraw(i, component, local123 + component.width / 2, local114 + component.height / 2);
 										} else {
 											if (component.type == 7) {
-												local1921 = component.method491(Sprites.nameIcons);
-												if (local1921 == null) {
-													if (Component.aBoolean72) {
+												font = component.loadFont(Sprites.nameIcons);
+												if (font == null) {
+													if (Component.shouldRedraw) {
 														InterfaceList.redraw(component);
 													}
 													continue;
@@ -1014,11 +1014,11 @@ public class Cs1ScriptRunner {
 															local556 = local123 + memory * (component.invMarginX + 115);
 															objId = (component.invMarginY + 12) * local468 + local114;
 															if (component.halign == 0) {
-																local1921.renderLeft(local3159, local556, objId, component.color, component.shadowed ? 0 : -1);
+																font.renderLeft(local3159, local556, objId, component.color, component.shadowed ? 0 : -1);
 															} else if (component.halign == 1) {
-																local1921.renderCenter(local3159, local556 + 57, objId, component.color, component.shadowed ? 0 : -1);
+																font.renderCenter(local3159, local556 + 57, objId, component.color, component.shadowed ? 0 : -1);
 															} else {
-																local1921.renderRight(local3159, local556 + 115 - 1, objId, component.color, component.shadowed ? 0 : -1);
+																font.renderRight(local3159, local556 + 115 - 1, objId, component.color, component.shadowed ? 0 : -1);
 															}
 														}
 														local276++;

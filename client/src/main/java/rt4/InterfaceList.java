@@ -40,17 +40,17 @@ public class InterfaceList {
 	@OriginalMember(owner = "client!md", name = "W", descriptor = "I")
 	public static int topLevelInterface = -1;
 	@OriginalMember(owner = "client!bm", name = "f", descriptor = "Lclient!ve;")
-	public static Js5 aClass153_12;
+	public static Js5 js5Archive8;
 	@OriginalMember(owner = "client!nd", name = "v", descriptor = "Lclient!ve;")
-	public static Js5 aClass153_64;
+	public static Js5 js5Archive13;
 	@OriginalMember(owner = "client!qg", name = "ab", descriptor = "Lclient!ve;")
-	public static Js5 aClass153_84;
+	public static Js5 js5Archive3;
 	@OriginalMember(owner = "client!qh", name = "g", descriptor = "Lclient!ve;")
-	public static Js5 aClass153_85;
+	public static Js5 js5Archive7;
 	@OriginalMember(owner = "client!th", name = "j", descriptor = "[[Lclient!be;")
 	public static Component[][] components;
 	@OriginalMember(owner = "client!sc", name = "m", descriptor = "[Z")
-	public static boolean[] aBooleanArray115;
+	public static boolean[] loaded;
 	@OriginalMember(owner = "client!oj", name = "y", descriptor = "I")
 	public static int keyQueueSize = 0;
 	@OriginalMember(owner = "client!je", name = "fb", descriptor = "I")
@@ -119,70 +119,70 @@ public class InterfaceList {
 	public static boolean aBoolean298 = false;
 
 	@OriginalMember(owner = "client!ab", name = "a", descriptor = "(ZLclient!ve;Lclient!ve;Lclient!ve;Lclient!ve;)V")
-	public static void init(@OriginalArg(1) Js5 arg0, @OriginalArg(2) Js5 arg1, @OriginalArg(3) Js5 arg2, @OriginalArg(4) Js5 arg3) {
-		aClass153_12 = arg1;
-		aClass153_64 = arg0;
-		aClass153_84 = arg2;
-		aClass153_85 = arg3;
-		components = new Component[aClass153_84.capacity()][];
-		aBooleanArray115 = new boolean[aClass153_84.capacity()];
+	public static void init(@OriginalArg(1) Js5 archive13, @OriginalArg(2) Js5 archive8, @OriginalArg(3) Js5 archive3, @OriginalArg(4) Js5 archive7) {
+		js5Archive8  = archive8;
+		js5Archive13 = archive13;
+		js5Archive3  = archive3;
+		js5Archive7  = archive7;
+		components = new Component[js5Archive3.capacity()][];
+		loaded = new boolean[js5Archive3.capacity()];
 	}
 
 	@OriginalMember(owner = "client!ig", name = "a", descriptor = "(BI)V")
-	public static void method2275(@OriginalArg(1) int arg0) {
-		if (arg0 == -1 || !aBooleanArray115[arg0]) {
+	public static void unload(@OriginalArg(1) int interfaceId) {
+		if (interfaceId == -1 || !loaded[interfaceId]) {
 			return;
 		}
-		aClass153_84.discardUnpacked(arg0);
-		if (components[arg0] == null) {
+		js5Archive3.discardUnpacked(interfaceId);
+		if (components[interfaceId] == null) {
 			return;
 		}
-		@Pc(27) boolean local27 = true;
-		for (@Pc(29) int local29 = 0; local29 < components[arg0].length; local29++) {
-			if (components[arg0][local29] != null) {
-				if (components[arg0][local29].type == 2) {
-					local27 = false;
+		@Pc(27) boolean shouldUnload = true;
+		for (@Pc(29) int i = 0; i < components[interfaceId].length; i++) {
+			if (components[interfaceId][i] != null) {
+				if (components[interfaceId][i].type == 2) {
+					shouldUnload = false;
 				} else {
-					components[arg0][local29] = null;
+					components[interfaceId][i] = null;
 				}
 			}
 		}
-		if (local27) {
-			components[arg0] = null;
+		if (shouldUnload) {
+			components[interfaceId] = null;
 		}
-		aBooleanArray115[arg0] = false;
+		loaded[interfaceId] = false;
 	}
 
 	@OriginalMember(owner = "client!tm", name = "b", descriptor = "(II)Z")
-	public static boolean load(@OriginalArg(0) int arg0) {
-		if (aBooleanArray115[arg0]) {
+	public static boolean load(@OriginalArg(0) int group) {
+		if (loaded[group]) {
 			return true;
 		}
 
-		if (aClass153_84.isGroupReady(arg0)) {
-			@Pc(25) int local25 = aClass153_84.getGroupCapacity(arg0);
-			if (local25 == 0) {
-				aBooleanArray115[arg0] = true;
+		if (js5Archive3.isGroupReady(group)) {
+			@Pc(25) int capacity = js5Archive3.getGroupCapacity(group);
+			if (capacity == 0) {
+				loaded[group] = true;
 				return true;
 			}
-			if (components[arg0] == null) {
-				components[arg0] = new Component[local25];
+			if (components[group] == null) {
+				components[group] = new Component[capacity];
 			}
-			for (@Pc(46) int local46 = 0; local46 < local25; local46++) {
-				if (components[arg0][local46] == null) {
-					@Pc(62) byte[] local62 = aClass153_84.fetchFile(arg0, local46);
-					if (local62 != null) {
-						@Pc(74) Component local74 = components[arg0][local46] = new Component();
-						local74.id = local46 + (arg0 << 16);
-						if (local62[0] == -1) {
-							local74.decodeIf3(new Buffer(local62));
+			for (@Pc(46) int i = 0; i < capacity; i++) {
+				if (components[group][i] == null) {
+					@Pc(62) byte[] data = js5Archive3.fetchFile(group, i);
+					if (data != null) {
+						@Pc(74) Component component = components[group][i] = new Component();
+						component.id = i + (group << 16);
+						if (data[0] == -1) {
+							component.decodeIf3(new Buffer(data));
 						} else {
-							local74.decodeIf1(new Buffer(local62));
+							component.decodeIf1(new Buffer(data));
 						}
 					}
 				}
 			}
-			aBooleanArray115[arg0] = true;
+			loaded[group] = true;
 			return true;
 		} else {
 			return false;
@@ -190,9 +190,9 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!eb", name = "d", descriptor = "(I)V")
-	public static void method1287() {
-		components = new Component[aClass153_84.capacity()][];
-		aBooleanArray115 = new boolean[aClass153_84.capacity()];
+	public static void initComponents() {
+		components = new Component[js5Archive3.capacity()][];
+		loaded = new boolean[js5Archive3.capacity()];
 	}
 
 	@OriginalMember(owner = "client!i", name = "i", descriptor = "(Z)V")
@@ -371,7 +371,7 @@ public class InterfaceList {
 		@Pc(16) int local16 = arg1.interfaceId;
 		arg1.unlink();
 		if (arg0) {
-			method2275(local16);
+			unload(local16);
 		}
 		method3214(local16);
 		@Pc(32) Component local32 = getComponent(local9);
@@ -1070,14 +1070,14 @@ public class InterfaceList {
 	public static void method1596(@OriginalArg(0) boolean arg0) {
 		if (arg0) {
 			if (topLevelInterface != -1) {
-				method2275(topLevelInterface);
+				unload(topLevelInterface);
 			}
 			for (@Pc(18) ComponentPointer local18 = (ComponentPointer) openInterfaces.head(); local18 != null; local18 = (ComponentPointer) openInterfaces.next()) {
 				closeInterface(true, local18);
 			}
 			topLevelInterface = -1;
 			openInterfaces = new HashTable(8);
-			method1287();
+			initComponents();
 			topLevelInterface = LoginManager.loginScreenId;
 			method3712(false);
 			ScriptRunner.method1807();

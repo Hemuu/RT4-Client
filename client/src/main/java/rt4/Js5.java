@@ -7,6 +7,9 @@ import org.openrs2.deob.annotation.Pc;
 
 import java.util.Arrays;
 
+/**
+ * Jagex Store 5 game file
+ */
 @OriginalClass("client!ve")
 public final class Js5 {
 

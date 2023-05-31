@@ -2590,6 +2590,7 @@ public class Protocol {
 				@Pc(773) Component component;
 				if (type == 3) {
 					component = InterfaceList.getComponent(i);
+					if (component == null) return;
 					if (!change.stringArg.strEquals(component.text)) {
 						component.text = change.stringArg;
 						InterfaceList.redraw(component);
