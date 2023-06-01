@@ -176,7 +176,7 @@ public final class Js5NetQueue {
 							this.current.blockPosition = 8;
 							this.inBuffer.offset = 0;
 						} else if (this.current.blockPosition != 0) {
-							throw new IOException();
+							throw new IOException("BlockPosition is not 0");
 						} else if (this.inBuffer.data[0] == -1) {
 							this.current.blockPosition = 1;
 							this.inBuffer.offset = 0;
@@ -187,11 +187,12 @@ public final class Js5NetQueue {
 				}
 			}
 			return true;
-		} catch (@Pc(644) IOException local644) {
+		} catch (@Pc(644) IOException e) {
 			try {
 				this.socket.close();
 			} catch (@Pc(650) Exception ignored) {
 			}
+			e.printStackTrace();
 			this.response = -2;
 			this.errors++;
 			this.socket = null;
@@ -209,11 +210,12 @@ public final class Js5NetQueue {
 			this.outBuffer.p1(7);
 			this.outBuffer.p3(0);
 			this.socket.write(this.outBuffer.data, 4);
-		} catch (@Pc(39) IOException local39) {
+		} catch (@Pc(39) IOException e) {
 			try {
 				this.socket.close();
-			} catch (@Pc(45) Exception local45) {
+			} catch (@Pc(45) Exception ignored) {
 			}
+			e.printStackTrace();
 			this.errors++;
 			this.response = -2;
 			this.socket = null;
@@ -235,11 +237,12 @@ public final class Js5NetQueue {
 			this.outBuffer.p1(arg0 ? 2 : 3);
 			this.outBuffer.p3(0);
 			this.socket.write(this.outBuffer.data, 4);
-		} catch (@Pc(42) IOException local42) {
+		} catch (@Pc(42) IOException e) {
 			try {
 				this.socket.close();
-			} catch (@Pc(48) Exception local48) {
+			} catch (@Pc(48) Exception ignored) {
 			}
+			e.printStackTrace();
 			this.errors++;
 			this.response = -2;
 			this.socket = null;
@@ -280,11 +283,12 @@ public final class Js5NetQueue {
 								this.outBuffer.p1(this.encryptionKey);
 								this.outBuffer.p2(0);
 								this.socket.write(this.outBuffer.data, 4);
-							} catch (@Pc(107) IOException local107) {
+							} catch (@Pc(107) IOException e) {
 								try {
 									this.socket.close();
 								} catch (@Pc(113) Exception local113) {
 								}
+								e.printStackTrace();
 								this.response = -2;
 								this.errors++;
 								this.socket = null;
