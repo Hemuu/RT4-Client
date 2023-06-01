@@ -568,7 +568,7 @@ public class Cs1ScriptRunner {
 							}
 							@Pc(1186) ComponentPointer local1186 = (ComponentPointer) InterfaceList.openInterfaces.get(component.id);
 							if (local1186 != null) {
-								if (local1186.anInt5879 == 0 && !aBoolean108 && ScriptRunner.anInt3751 >= local166 && local164 <= ScriptRunner.anInt1892 && local302 > ScriptRunner.anInt3751 && ScriptRunner.anInt1892 < local291 && !Cheat.qaOpTest) {
+								if (local1186.type == 0 && !aBoolean108 && ScriptRunner.anInt3751 >= local166 && local164 <= ScriptRunner.anInt1892 && local302 > ScriptRunner.anInt3751 && ScriptRunner.anInt1892 < local291 && !Cheat.qaOpTest) {
 									MiniMenu.ops[0] = LocalizedText.CANCEL;
 									MiniMenu.size = 1;
 									MiniMenu.cursors[0] = MiniMenu.anInt1092;

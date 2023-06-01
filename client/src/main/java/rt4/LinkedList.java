@@ -45,25 +45,25 @@ public final class LinkedList {
 	}
 
 	@OriginalMember(owner = "client!ih", name = "a", descriptor = "(ZLclient!ab;)V")
-	public final void addTail(@OriginalArg(1) Node arg0) {
-		if (arg0.aClass3_223 != null) {
-			arg0.unlink();
+	public final void addTail(@OriginalArg(1) Node node) {
+		if (node.aClass3_223 != null) {
+			node.unlink();
 		}
-		arg0.aClass3_222 = this.aClass3_109;
-		arg0.aClass3_223 = this.aClass3_109.aClass3_223;
-		arg0.aClass3_223.aClass3_222 = arg0;
-		arg0.aClass3_222.aClass3_223 = arg0;
+		node.aClass3_222 = this.aClass3_109;
+		node.aClass3_223 = this.aClass3_109.aClass3_223;
+		node.aClass3_223.aClass3_222 = node;
+		node.aClass3_222.aClass3_223 = node;
 	}
 
 	@OriginalMember(owner = "client!ih", name = "a", descriptor = "(ILclient!ab;)V")
-	public final void addHead(@OriginalArg(1) Node arg0) {
-		if (arg0.aClass3_223 != null) {
-			arg0.unlink();
+	public final void addHead(@OriginalArg(1) Node node) {
+		if (node.aClass3_223 != null) {
+			node.unlink();
 		}
-		arg0.aClass3_222 = this.aClass3_109.aClass3_222;
-		arg0.aClass3_223 = this.aClass3_109;
-		arg0.aClass3_223.aClass3_222 = arg0;
-		arg0.aClass3_222.aClass3_223 = arg0;
+		node.aClass3_222 = this.aClass3_109.aClass3_222;
+		node.aClass3_223 = this.aClass3_109;
+		node.aClass3_223.aClass3_222 = node;
+		node.aClass3_222.aClass3_223 = node;
 	}
 
 	@OriginalMember(owner = "client!ih", name = "d", descriptor = "(I)Lclient!ab;")

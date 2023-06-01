@@ -1857,7 +1857,7 @@ public class Protocol {
 			if (ptr != null) {
 				InterfaceList.closeInterface(ptr.interfaceId != component, ptr);
 			}
-			method1148(component, pointer, type);
+			openInterface(component, pointer, type);
 			opcode = -1;
 			return true;
 		} else if (opcode == ServerProt.RESET_ANIMS) {
@@ -3473,25 +3473,25 @@ public class Protocol {
 	}
 
 	@OriginalMember(owner = "client!dh", name = "a", descriptor = "(IIII)Lclient!wk;")
-	public static ComponentPointer method1148(@OriginalArg(1) int arg0, @OriginalArg(2) int arg1, @OriginalArg(3) int arg2) {
-		@Pc(9) ComponentPointer local9 = new ComponentPointer();
-		local9.anInt5879 = arg2;
-		local9.interfaceId = arg0;
-		InterfaceList.openInterfaces.put(local9, arg1);
-		InterfaceList.method1753(arg0);
-		@Pc(28) Component local28 = InterfaceList.getComponent(arg1);
-		if (local28 != null) {
-			InterfaceList.redraw(local28);
+	public static ComponentPointer openInterface(@OriginalArg(1) int interfaceId, @OriginalArg(2) int pointer, @OriginalArg(3) int type) {
+		@Pc(9) ComponentPointer ptr = new ComponentPointer();
+		ptr.type = type;
+		ptr.interfaceId = interfaceId;
+		InterfaceList.openInterfaces.put(ptr, pointer);
+		InterfaceList.method1753(interfaceId);
+		@Pc(28) Component component = InterfaceList.getComponent(pointer);
+		if (component != null) {
+			InterfaceList.redraw(component);
 		}
 		if (Cs1ScriptRunner.aClass13_10 != null) {
 			InterfaceList.redraw(Cs1ScriptRunner.aClass13_10);
 			Cs1ScriptRunner.aClass13_10 = null;
 		}
 		@Pc(45) int local45 = MiniMenu.size;
-		@Pc(53) int local53;
-		for (local53 = 0; local53 < local45; local53++) {
-			if (InterfaceList.method5(MiniMenu.actions[local53])) {
-				MiniMenu.remove(local53);
+		@Pc(53) int i;
+		for (i = 0; i < local45; i++) {
+			if (InterfaceList.method5(MiniMenu.actions[i])) {
+				MiniMenu.remove(i);
 			}
 		}
 		if (MiniMenu.size == 1) {
@@ -3499,24 +3499,24 @@ public class Protocol {
 			InterfaceList.redrawScreen(InterfaceList.anInt4271, InterfaceList.anInt761, InterfaceList.anInt5138, InterfaceList.anInt436);
 		} else {
 			InterfaceList.redrawScreen(InterfaceList.anInt4271, InterfaceList.anInt761, InterfaceList.anInt5138, InterfaceList.anInt436);
-			local53 = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
+			int option = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
 			for (@Pc(95) int local95 = 0; local95 < MiniMenu.size; local95++) {
 				@Pc(104) int local104 = Fonts.b12Full.getStringWidth(MiniMenu.getOp(local95));
-				if (local104 > local53) {
-					local53 = local104;
+				if (local104 > option) {
+					option = local104;
 				}
 			}
-			InterfaceList.anInt761 = local53 + 8;
+			InterfaceList.anInt761 = option + 8;
 			InterfaceList.anInt436 = MiniMenu.size * 15 + (InterfaceList.aBoolean298 ? 26 : 22);
 		}
-		if (local28 != null) {
-			InterfaceList.method531(local28, false);
+		if (component != null) {
+			InterfaceList.method531(component, false);
 		}
-		InterfaceList.method1626(arg0);
+		InterfaceList.method1626(interfaceId);
 		if (InterfaceList.topLevelInterface != -1) {
 			InterfaceList.runScripts(1, InterfaceList.topLevelInterface);
 		}
-		return local9;
+		return ptr;
 	}
 
 	@OriginalMember(owner = "client!ah", name = "b", descriptor = "(I)V")

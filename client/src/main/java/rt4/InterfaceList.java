@@ -270,13 +270,13 @@ public class InterfaceList {
 
 	@OriginalMember(owner = "client!qf", name = "a", descriptor = "(BII)Lclient!be;")
 	public static Component method1418(@OriginalArg(1) int arg0, @OriginalArg(2) int arg1) {
-		@Pc(7) Component local7 = getComponent(arg0);
+		@Pc(7) Component component = getComponent(arg0);
 		if (arg1 == -1) {
-			return local7;
-		} else if (local7 == null || local7.createdComponents == null || local7.createdComponents.length <= arg1) {
+			return component;
+		} else if (component == null || component.createdComponents == null || component.createdComponents.length <= arg1) {
 			return null;
 		} else {
-			return local7.createdComponents[arg1];
+			return component.createdComponents[arg1];
 		}
 	}
 
@@ -309,58 +309,58 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!bg", name = "a", descriptor = "(Lclient!be;ZI)V")
-	public static void method531(@OriginalArg(0) Component arg0, @OriginalArg(1) boolean arg1) {
-		@Pc(20) int local20 = arg0.scrollMaxH == 0 ? arg0.width : arg0.scrollMaxH;
-		@Pc(32) int local32 = arg0.scrollMaxV == 0 ? arg0.height : arg0.scrollMaxV;
-		method4190(arg0.id, arg1, local20, local32, components[arg0.id >> 16]);
-		if (arg0.createdComponents != null) {
-			method4190(arg0.id, arg1, local20, local32, arg0.createdComponents);
+	public static void method531(@OriginalArg(0) Component component, @OriginalArg(1) boolean arg1) {
+		@Pc(20) int height = component.scrollMaxH == 0 ? component.width : component.scrollMaxH;
+		@Pc(32) int width = component.scrollMaxV == 0 ? component.height : component.scrollMaxV;
+		method4190(component.id, arg1, height, width, components[component.id >> 16]);
+		if (component.createdComponents != null) {
+			method4190(component.id, arg1, height, width, component.createdComponents);
 		}
-		@Pc(66) ComponentPointer local66 = (ComponentPointer) openInterfaces.get(arg0.id);
-		if (local66 != null) {
-			method4017(local32, arg1, local66.interfaceId, local20);
+		@Pc(66) ComponentPointer ptr = (ComponentPointer) openInterfaces.get(component.id);
+		if (ptr != null) {
+			method4017(width, arg1, ptr.interfaceId, height);
 		}
 	}
 
 	@OriginalMember(owner = "client!vk", name = "a", descriptor = "(IZIII[Lclient!be;)V")
-	public static void method4190(@OriginalArg(0) int arg0, @OriginalArg(1) boolean arg1, @OriginalArg(2) int arg2, @OriginalArg(4) int arg3, @OriginalArg(5) Component[] arg4) {
-		for (@Pc(3) int local3 = 0; local3 < arg4.length; local3++) {
-			@Pc(19) Component local19 = arg4[local3];
-			if (local19 != null && local19.overlayer == arg0) {
-				method2801(arg3, arg2, local19, arg1);
-				method2291(local19, arg3, arg2);
-				if (local19.scrollMaxH - local19.width < local19.scrollX) {
-					local19.scrollX = local19.scrollMaxH - local19.width;
+	public static void method4190(@OriginalArg(0) int interfaceId, @OriginalArg(1) boolean arg1, @OriginalArg(2) int height, @OriginalArg(4) int width, @OriginalArg(5) Component[] components) {
+		for (@Pc(3) int i = 0; i < components.length; i++) {
+			@Pc(19) Component component = components[i];
+			if (component != null && component.overlayer == interfaceId) {
+				method2801(width, height, component, arg1);
+				method2291(component, width, height);
+				if (component.scrollMaxH - component.width < component.scrollX) {
+					component.scrollX = component.scrollMaxH - component.width;
 				}
-				if (local19.scrollY > local19.scrollMaxV - local19.height) {
-					local19.scrollY = local19.scrollMaxV - local19.height;
+				if (component.scrollY > component.scrollMaxV - component.height) {
+					component.scrollY = component.scrollMaxV - component.height;
 				}
-				if (local19.scrollY < 0) {
-					local19.scrollY = 0;
+				if (component.scrollY < 0) {
+					component.scrollY = 0;
 				}
-				if (local19.scrollX < 0) {
-					local19.scrollX = 0;
+				if (component.scrollX < 0) {
+					component.scrollX = 0;
 				}
-				if (local19.type == 0) {
-					method531(local19, arg1);
+				if (component.type == 0) {
+					method531(component, arg1);
 				}
 			}
 		}
 	}
 
 	@OriginalMember(owner = "client!fn", name = "c", descriptor = "(II)V")
-	public static void method1626(@OriginalArg(0) int arg0) {
-		if (arg0 == -1 || !load(arg0)) {
+	public static void method1626(@OriginalArg(0) int interfaceId) {
+		if (interfaceId == -1 || !load(interfaceId)) {
 			return;
 		}
-		@Pc(31) Component[] local31 = components[arg0];
-		for (@Pc(33) int local33 = 0; local33 < local31.length; local33++) {
-			@Pc(41) Component local41 = local31[local33];
-			if (local41.anObjectArray3 != null) {
-				@Pc(50) HookRequest local50 = new HookRequest();
-				local50.arguments = local41.anObjectArray3;
-				local50.source = local41;
-				ScriptRunner.run(2000000, local50);
+		@Pc(31) Component[] subComponents = components[interfaceId];
+		for (@Pc(33) int i = 0; i < subComponents.length; i++) {
+			@Pc(41) Component component = subComponents[i];
+			if (component.anObjectArray3 != null) {
+				@Pc(50) HookRequest hook = new HookRequest();
+				hook.arguments = component.anObjectArray3;
+				hook.source = component;
+				ScriptRunner.run(2000000, hook);
 			}
 		}
 	}
@@ -378,11 +378,10 @@ public class InterfaceList {
 		if (local32 != null) {
 			redraw(local32);
 		}
-		@Pc(41) int local41 = MiniMenu.size;
-		@Pc(43) int local43;
-		for (local43 = 0; local43 < local41; local43++) {
-			if (method5(MiniMenu.actions[local43])) {
-				MiniMenu.remove(local43);
+		@Pc(41) int size = MiniMenu.size;
+		for (int i = 0; i < size; i++) {
+			if (method5(MiniMenu.actions[i])) {
+				MiniMenu.remove(i);
 			}
 		}
 		if (MiniMenu.size == 1) {
@@ -390,15 +389,15 @@ public class InterfaceList {
 			redrawScreen(anInt4271, anInt761, anInt5138, anInt436);
 		} else {
 			redrawScreen(anInt4271, anInt761, anInt5138, anInt436);
-			local43 = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
-			for (@Pc(75) int local75 = 0; local75 < MiniMenu.size; local75++) {
-				@Pc(88) int local88 = Fonts.b12Full.getStringWidth(MiniMenu.getOp(local75));
-				if (local43 < local88) {
-					local43 = local88;
+			int textWidth = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
+			for (@Pc(75) int i = 0; i < MiniMenu.size; i++) {
+				@Pc(88) int optionWidth = Fonts.b12Full.getStringWidth(MiniMenu.getOp(i));
+				if (textWidth < optionWidth) {
+					textWidth = optionWidth;
 				}
 			}
 			anInt436 = MiniMenu.size * 15 + (aBoolean298 ? 26 : 22);
-			anInt761 = local43 + 8;
+			anInt761 = textWidth + 8;
 		}
 		if (topLevelInterface != -1) {
 			runScripts(1, topLevelInterface);
@@ -517,10 +516,10 @@ public class InterfaceList {
 			aClass13_26 = arg2;
 		}
 		if (arg3 && arg2.onResize != null && (local4 != arg2.width || arg2.height != local7)) {
-			@Pc(305) HookRequest local305 = new HookRequest();
-			local305.arguments = arg2.onResize;
-			local305.source = arg2;
-			lowPriorityRequests.addTail(local305);
+			@Pc(305) HookRequest hook = new HookRequest();
+			hook.arguments = arg2.onResize;
+			hook.source = arg2;
+			lowPriorityRequests.addTail(hook);
 		}
 	}
 
