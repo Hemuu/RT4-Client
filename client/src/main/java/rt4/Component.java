@@ -704,7 +704,6 @@ public final class Component {
 			if (this.id == 24379392 || this.id == 24379393 || this.id == 24379394 || this.id == 24379395 || this.id == 24379396) {
 				this.font = 496;
 			}
-			System.out.println("Parsed font for interface " + this.id + " as " + this.font);
 			this.shadowed = buffer.g1() == 1;
 		}
 		if (this.type == 4) {
@@ -759,8 +758,6 @@ public final class Component {
 			if (this.id == 24379392 || this.id == 24379393 || this.id == 24379394 || this.id == 24379395 || this.id == 24379396) {
 				this.font = 496;
 			}
-			System.out.println("Parsed font for interface " + this.id + " as " + this.font);
-
 			this.shadowed = buffer.g1() == 1;
 			this.color = buffer.g4();
 			this.invMarginX = buffer.g2b();
@@ -1101,7 +1098,6 @@ public final class Component {
 			if (this.id == 24379392 || this.id == 24379393 || this.id == 24379394 || this.id == 24379395 || this.id == 24379396) {
 				this.font = 496;
 			}
-			System.out.println("Parsed font for interface " + this.id + " as " + this.font);
 			this.text = buffer.gjstr();
 			this.vpadding = buffer.g1();
 			this.halign = buffer.g1();
