@@ -15,14 +15,14 @@ public final class SoftwareIndexedSprite extends IndexedSprite {
 	private final int[] anIntArray144;
 
 	@OriginalMember(owner = "client!ek", name = "<init>", descriptor = "(IIIIII[B[I)V")
-	public SoftwareIndexedSprite(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int arg3, @OriginalArg(4) int arg4, @OriginalArg(5) int arg5, @OriginalArg(6) byte[] arg6, @OriginalArg(7) int[] arg7) {
-		this.innerWidth = arg0;
-		this.innerHeight = arg1;
-		this.xOffset = arg2;
-		this.yOffset = arg3;
-		this.width = arg4;
-		this.height = arg5;
-		this.pixels = arg6;
+	public SoftwareIndexedSprite(@OriginalArg(0) int innerWidth, @OriginalArg(1) int innerHeight, @OriginalArg(2) int x, @OriginalArg(3) int y, @OriginalArg(4) int width, @OriginalArg(5) int height, @OriginalArg(6) byte[] pixels, @OriginalArg(7) int[] arg7) {
+		this.innerWidth  = innerWidth;
+		this.innerHeight = innerHeight;
+		this.xOffset = x;
+		this.yOffset = y;
+		this.width = width;
+		this.height = height;
+		this.pixels = pixels;
 		this.anIntArray144 = arg7;
 	}
 

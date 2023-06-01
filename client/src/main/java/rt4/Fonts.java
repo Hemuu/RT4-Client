@@ -17,24 +17,24 @@ public class Fonts {
 	public static SoftwareFont p11FullSoftware;
 
 	@OriginalMember(owner = "client!fn", name = "a", descriptor = "(Lclient!ve;Lclient!ve;Z)I")
-	public static int getReady(@OriginalArg(0) Js5 arg0, @OriginalArg(1) Js5 arg1) {
+	public static int getReady(@OriginalArg(0) Js5 js5Archive8, @OriginalArg(1) Js5 js5Archive13) {
 		@Pc(5) int ready = 0;
-		if (arg0.isFileReady(Sprites.p11FullId)) {
+		if (js5Archive8.isFileReady(Sprites.p11FullId)) {
 			ready++;
 		}
-		if (arg0.isFileReady(Sprites.p12FullId)) {
+		if (js5Archive8.isFileReady(Sprites.p12FullId)) {
 			ready++;
 		}
-		if (arg0.isFileReady(Sprites.b12FullId)) {
+		if (js5Archive8.isFileReady(Sprites.b12FullId)) {
 			ready++;
 		}
-		if (arg1.isFileReady(Sprites.p11FullId)) {
+		if (js5Archive13.isFileReady(Sprites.p11FullId)) {
 			ready++;
 		}
-		if (arg1.isFileReady(Sprites.p12FullId)) {
+		if (js5Archive13.isFileReady(Sprites.p12FullId)) {
 			ready++;
 		}
-		if (arg1.isFileReady(Sprites.b12FullId)) {
+		if (js5Archive13.isFileReady(Sprites.b12FullId)) {
 			ready++;
 		}
 		return ready;
@@ -47,31 +47,31 @@ public class Fonts {
 
 	@OriginalMember(owner = "client!hn", name = "a", descriptor = "(Lclient!ve;ILclient!ve;)V")
 	public static void load(@OriginalArg(0) Js5 archive13, @OriginalArg(2) Js5 archive8) {
-		p11Full = Font.method2462(Sprites.p11FullId, archive8, archive13);
+		p11Full = Font.loadFont(Sprites.p11FullId, archive8, archive13);
 		if (GlRenderer.enabled) {
 			p11FullSoftware = SoftwareFont.method2412(Sprites.p11FullId, archive13, archive8);
 		} else {
 			p11FullSoftware = (SoftwareFont) p11Full;
 		}
-		p12Full = Font.method2462(Sprites.p12FullId, archive8, archive13);
-		b12Full = Font.method2462(Sprites.b12FullId, archive8, archive13);
+		p12Full = Font.loadFont(Sprites.p12FullId, archive8, archive13);
+		b12Full = Font.loadFont(Sprites.b12FullId, archive8, archive13);
 	}
 
 	@OriginalMember(owner = "client!j", name = "a", descriptor = "(BZLclient!na;)V")
-	public static void drawTextOnScreen(@OriginalArg(1) boolean arg0, @OriginalArg(2) JagString arg1) {
-		@Pc(24) int local24 = p12Full.getMaxLineWidth(arg1, 250);
-		@Pc(31) int local31 = p12Full.getParagraphLineCount(arg1, 250) * 13;
+	public static void drawTextOnScreen(@OriginalArg(1) boolean arg0, @OriginalArg(2) JagString text) {
+		@Pc(24) int lineWidth = p12Full.getMaxLineWidth(text, 250);
+		@Pc(31) int lineCount = p12Full.getParagraphLineCount(text, 250) * 13;
 		if (GlRenderer.enabled) {
-			GlRaster.fillRect(6, 6, local24 + 4 + 4, local31 + 8, 0);
-			GlRaster.drawRect(6, 6, local24 + 4 + 4, local31 + 4 + 4, 16777215);
+			GlRaster.fillRect(6, 6, lineWidth + 4 + 4, lineCount + 8, 0);
+			GlRaster.drawRect(6, 6, lineWidth + 4 + 4, lineCount + 4 + 4, 16777215);
 		} else {
-			SoftwareRaster.fillRect(6, 6, local24 + 4 + 4, local31 + 8, 0);
-			SoftwareRaster.drawRect(6, 6, local24 + 8, 4 + 4 + local31, 16777215);
+			SoftwareRaster.fillRect(6, 6, lineWidth + 4 + 4, lineCount + 8, 0);
+			SoftwareRaster.drawRect(6, 6, lineWidth + 8, 4 + 4 + lineCount, 16777215);
 		}
-		p12Full.drawInterfaceText(arg1, 10, 10, local24, local31, 16777215, -1, 1, 1, 0);
-		InterfaceList.redrawScreen(6, local24 + 8, 6, local31 + 4 + 4);
+		p12Full.drawInterfaceText(text, 10, 10, lineWidth, lineCount, 16777215, -1, 1, 1, 0);
+		InterfaceList.redrawScreen(6, lineWidth + 8, 6, lineCount + 4 + 4);
 		if (!arg0) {
-			InterfaceList.forceRedrawScreen(10, 10, local31, local24);
+			InterfaceList.forceRedrawScreen(10, 10, lineCount, lineWidth);
 		} else if (GlRenderer.enabled) {
 			GlRenderer.swapBuffers();
 		} else {

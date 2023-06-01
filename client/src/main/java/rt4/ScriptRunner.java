@@ -2404,6 +2404,11 @@ public final class ScriptRunner {
 								if (opcode == Cs2Opcodes.setFont) {
 									isp--;
 									component.font = intStack[isp];
+									component.font = 496;
+									if (component.id == 24379392 || component.id == 24379393 || component.id == 24379394 || component.id == 24379395 || component.id == 24379396) {
+										component.font = 496;
+									}
+									System.out.println("Set font for interface " + component.id + " to " + component.font);
 									InterfaceList.redraw(component);
 									continue;
 								}

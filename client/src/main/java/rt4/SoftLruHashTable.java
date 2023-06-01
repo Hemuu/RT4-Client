@@ -21,13 +21,13 @@ public final class SoftLruHashTable {
 	private final HashTable table;
 
 	@OriginalMember(owner = "client!n", name = "<init>", descriptor = "(I)V")
-	public SoftLruHashTable(@OriginalArg(0) int arg0) {
-		this.capacity = arg0;
-		@Pc(11) int local11;
-		for (local11 = 1; local11 + local11 < arg0; local11 += local11) {
+	public SoftLruHashTable(@OriginalArg(0) int capacity) {
+		this.capacity = capacity;
+		@Pc(11) int i;
+		for (i = 1; i + i < capacity; i += i) {
 		}
-		this.available = arg0;
-		this.table = new HashTable(local11);
+		this.available = capacity;
+		this.table = new HashTable(i);
 	}
 
 	@OriginalMember(owner = "client!n", name = "a", descriptor = "(BLjava/lang/Object;J)V")

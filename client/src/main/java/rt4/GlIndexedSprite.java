@@ -21,7 +21,7 @@ public final class GlIndexedSprite extends IndexedSprite {
 	private int anInt4287;
 
 	@OriginalMember(owner = "client!oh", name = "n", descriptor = "I")
-	private int anInt4281 = -1;
+	private int textureId = -1;
 
 	@OriginalMember(owner = "client!oh", name = "p", descriptor = "I")
 	private int anInt4283 = 0;
@@ -68,13 +68,13 @@ public final class GlIndexedSprite extends IndexedSprite {
 		}
 		@Pc(93) ByteBuffer local93 = ByteBuffer.wrap(local20);
 		@Pc(95) GL2 local95 = GlRenderer.gl;
-		if (this.anInt4281 == -1) {
+		if (this.textureId == -1) {
 			@Pc(102) int[] local102 = new int[1];
 			local95.glGenTextures(1, local102, 0);
-			this.anInt4281 = local102[0];
+			this.textureId = local102[0];
 			this.anInt4285 = GlCleaner.contextId;
 		}
-		GlRenderer.setTextureId(this.anInt4281);
+		GlRenderer.setTextureId(this.textureId);
 		local95.glTexImage2D(GL2.GL_TEXTURE_2D, 0, GL2.GL_RGBA, this.anInt4287, this.anInt4286, 0, GL2.GL_RGBA, GL2.GL_UNSIGNED_BYTE, local93);
 		GlCleaner.onCard2d += local93.limit() - this.anInt4284;
 		this.anInt4284 = local93.limit();
@@ -87,7 +87,7 @@ public final class GlIndexedSprite extends IndexedSprite {
 		@Pc(5) int local5 = arg0 + this.xOffset;
 		@Pc(10) int local10 = arg1 + this.yOffset;
 		@Pc(12) GL2 local12 = GlRenderer.gl;
-		GlRenderer.setTextureId(this.anInt4281);
+		GlRenderer.setTextureId(this.textureId);
 		this.method3338();
 		local12.glColor4f(1.0F, 1.0F, 1.0F, (float) arg2 / 256.0F);
 		local12.glTranslatef((float) local5, (float) (GlRenderer.canvasHeight - local10), 0.0F);
@@ -107,24 +107,24 @@ public final class GlIndexedSprite extends IndexedSprite {
 
 	@OriginalMember(owner = "client!oh", name = "a", descriptor = "(II)V")
 	@Override
-	public final void renderTransparent(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
+	public final void renderTransparent(@OriginalArg(0) int x, @OriginalArg(1) int y) {
 		GlRenderer.method4149();
-		@Pc(5) int local5 = arg0 + this.xOffset;
-		@Pc(10) int local10 = arg1 + this.yOffset;
-		@Pc(12) GL2 local12 = GlRenderer.gl;
-		GlRenderer.setTextureId(this.anInt4281);
+		@Pc(5)  int finalX = x + this.xOffset;
+		@Pc(10) int finalY = y + this.yOffset;
+		@Pc(12) GL2 renderer = GlRenderer.gl;
+		GlRenderer.setTextureId(this.textureId);
 		this.method3338();
-		local12.glTranslatef((float) local5, (float) (GlRenderer.canvasHeight - local10), 0.0F);
-		local12.glCallList(this.anInt4282);
-		local12.glLoadIdentity();
+		renderer.glTranslatef((float) finalX, (float) (GlRenderer.canvasHeight - finalY), 0.0F);
+		renderer.glCallList(this.anInt4282);
+		renderer.glLoadIdentity();
 	}
 
 	@OriginalMember(owner = "client!oh", name = "finalize", descriptor = "()V")
 	@Override
 	public final void finalize() throws Throwable {
-		if (this.anInt4281 != -1) {
-			GlCleaner.deleteTexture2d(this.anInt4281, this.anInt4284, this.anInt4285);
-			this.anInt4281 = -1;
+		if (this.textureId != -1) {
+			GlCleaner.deleteTexture2d(this.textureId, this.anInt4284, this.anInt4285);
+			this.textureId = -1;
 			this.anInt4284 = 0;
 		}
 		if (this.anInt4282 != -1) {

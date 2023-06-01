@@ -118,12 +118,12 @@ public abstract class Font extends SecondaryNode {
 	private int paragraphBottomPadding;
 
 	@OriginalMember(owner = "client!rk", name = "<init>", descriptor = "([B[I[I[I[I)V")
-	protected Font(@OriginalArg(0) byte[] arg0, @OriginalArg(1) int[] arg1, @OriginalArg(2) int[] arg2, @OriginalArg(3) int[] arg3, @OriginalArg(4) int[] arg4) {
+	protected Font(@OriginalArg(0) byte[] bytes, @OriginalArg(1) int[] arg1, @OriginalArg(2) int[] arg2, @OriginalArg(3) int[] arg3, @OriginalArg(4) int[] arg4) {
 		this.spriteXOffsets = arg1;
 		this.spriteYOffsets = arg2;
 		this.spriteInnerWidths = arg3;
 		this.spriteInnerHeights = arg4;
-		this.decode(arg0);
+		this.decode(bytes);
 		@Pc(21) int local21 = Integer.MAX_VALUE;
 		@Pc(23) int local23 = Integer.MIN_VALUE;
 		for (@Pc(25) int local25 = 0; local25 < 256; local25++) {
@@ -200,44 +200,44 @@ public abstract class Font extends SecondaryNode {
 	}
 
 	@OriginalMember(owner = "client!ce", name = "a", descriptor = "(I[B)Lclient!rk;")
-	public static Font method799(@OriginalArg(1) byte[] arg0) {
-		if (arg0 == null) {
+	public static Font loadFont(@OriginalArg(1) byte[] data) {
+		if (data == null) {
 			return null;
 		}
-		@Pc(27) Font local27;
+		@Pc(27) Font font;
 		if (GlRenderer.enabled) {
-			local27 = new GlFont(arg0, SpriteLoader.xOffsets, SpriteLoader.yOffsets, SpriteLoader.innerWidths, SpriteLoader.innerHeights, SpriteLoader.pixels);
+			font = new GlFont(data, SpriteLoader.xOffsets, SpriteLoader.yOffsets, SpriteLoader.innerWidths, SpriteLoader.innerHeights, SpriteLoader.pixels);
 		} else {
-			local27 = new SoftwareFont(arg0, SpriteLoader.xOffsets, SpriteLoader.yOffsets, SpriteLoader.innerWidths, SpriteLoader.innerHeights, SpriteLoader.pixels);
+			font = new SoftwareFont(data, SpriteLoader.xOffsets, SpriteLoader.yOffsets, SpriteLoader.innerWidths, SpriteLoader.innerHeights, SpriteLoader.pixels);
 		}
 		SpriteLoader.clear();
-		return local27;
+		return font;
 	}
 
 	@OriginalMember(owner = "client!k", name = "a", descriptor = "(IIBLclient!ve;Lclient!ve;)Lclient!rk;")
-	public static Font method2462(@OriginalArg(1) int arg0, @OriginalArg(3) Js5 arg1, @OriginalArg(4) Js5 arg2) {
-		return SpriteLoader.decode(arg1, 0, arg0) ? method799(arg2.fetchFile(arg0, 0)) : null;
+	public static Font loadFont(@OriginalArg(1) int font, @OriginalArg(3) Js5 js5Archive8, @OriginalArg(4) Js5 js5Archive13) {
+		return SpriteLoader.decode(js5Archive8, 0, font) ? loadFont(js5Archive13.fetchFile(font, 0)) : null;
 	}
 
 	@OriginalMember(owner = "client!rk", name = "a", descriptor = "(Lclient!na;IIIIIIIII)I")
-	public final int drawInterfaceText(@OriginalArg(0) JagString arg0, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int arg3, @OriginalArg(4) int arg4, @OriginalArg(5) int arg5, @OriginalArg(6) int arg6, @OriginalArg(7) int arg7, @OriginalArg(8) int arg8, @OriginalArg(9) int arg9) {
-		return this.renderParagraphAlpha(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+	public final int drawInterfaceText(@OriginalArg(0) JagString text, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int lineWidth, @OriginalArg(4) int lineCount, @OriginalArg(5) int color, @OriginalArg(6) int shadow, @OriginalArg(7) int arg7, @OriginalArg(8) int width, @OriginalArg(9) int height) {
+		return this.renderParagraphAlpha(text, arg1, arg2, lineWidth, lineCount, color, shadow, arg7, width, height);
 	}
 
 	@OriginalMember(owner = "client!rk", name = "a", descriptor = "(Lclient!na;II)V")
-	private void render(@OriginalArg(0) JagString arg0, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2) {
+	private void render(@OriginalArg(0) JagString text, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2) {
 		@Pc(4) int local4 = arg2 - this.lineHeight;
 		@Pc(6) int local6 = -1;
 		@Pc(8) int local8 = 0;
-		@Pc(12) int local12 = arg0.length();
-		for (@Pc(14) int local14 = 0; local14 < local12; local14++) {
-			@Pc(22) int local22 = arg0.charAt(local14);
+		@Pc(12) int length = text.length();
+		for (@Pc(14) int i = 0; i < length; i++) {
+			@Pc(22) int local22 = text.charAt(i);
 			if (local22 == 60) {
-				local6 = local14;
+				local6 = i;
 			} else {
 				@Pc(120) int local120;
 				if (local22 == 62 && local6 != -1) {
-					@Pc(42) JagString local42 = arg0.substring(local14, local6 + 1);
+					@Pc(42) JagString local42 = text.substring(i, local6 + 1);
 					local6 = -1;
 					if (local42.strEquals(TAG_LT)) {
 						local22 = 60;
@@ -329,8 +329,8 @@ public abstract class Font extends SecondaryNode {
 	protected abstract void renderGlyphTransparent(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int arg3, @OriginalArg(4) int arg4, @OriginalArg(5) int arg5, @OriginalArg(6) int arg6);
 
 	@OriginalMember(owner = "client!rk", name = "b", descriptor = "(Lclient!na;I)I")
-	public final int getMaxLineWidth(@OriginalArg(0) JagString arg0, @OriginalArg(1) int arg1) {
-		@Pc(10) int local10 = this.splitParagraph(arg0, new int[]{arg1}, lines);
+	public final int getMaxLineWidth(@OriginalArg(0) JagString text, @OriginalArg(1) int arg1) {
+		@Pc(10) int local10 = this.splitParagraph(text, new int[]{arg1}, lines);
 		@Pc(12) int local12 = 0;
 		for (@Pc(14) int local14 = 0; local14 < local10; local14++) {
 			@Pc(23) int local23 = this.getStringWidth(lines[local14]);
@@ -663,53 +663,53 @@ public abstract class Font extends SecondaryNode {
 	}
 
 	@OriginalMember(owner = "client!rk", name = "a", descriptor = "(Lclient!na;IIIIIIIIII)I")
-	public final int renderParagraphAlpha(@OriginalArg(0) JagString arg0, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int arg3, @OriginalArg(4) int arg4, @OriginalArg(5) int arg5, @OriginalArg(6) int arg6, @OriginalArg(8) int arg7, @OriginalArg(9) int arg8, @OriginalArg(10) int arg9) {
-		if (arg0 == null) {
+	public final int renderParagraphAlpha(@OriginalArg(0) JagString text, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int lineWidth, @OriginalArg(4) int lineCount, @OriginalArg(5) int color, @OriginalArg(6) int shadow, @OriginalArg(8) int arg7, @OriginalArg(9) int width, @OriginalArg(10) int height) {
+		if (text == null) {
 			return 0;
 		}
-		this.setColors(arg5, arg6, 256);
-		if (arg9 == 0) {
-			arg9 = this.lineHeight;
+		this.setColors(color, shadow, 256);
+		if (height == 0) {
+			height = this.lineHeight;
 		}
-		@Pc(20) int[] local20 = new int[]{arg3};
-		if (arg4 < this.paragraphTopPadding + this.paragraphBottomPadding + arg9 && arg4 < arg9 + arg9) {
+		@Pc(20) int[] local20 = new int[]{lineWidth};
+		if (lineCount < this.paragraphTopPadding + this.paragraphBottomPadding + height && lineCount < height + height) {
 			local20 = null;
 		}
-		@Pc(42) int local42 = this.splitParagraph(arg0, local20, lines);
-		if (arg8 == 3 && local42 == 1) {
-			arg8 = 1;
+		@Pc(42) int local42 = this.splitParagraph(text, local20, lines);
+		if (width == 3 && local42 == 1) {
+			width = 1;
 		}
 		@Pc(57) int local57;
 		@Pc(118) int local118;
-		if (arg8 == 0) {
+		if (width == 0) {
 			local57 = arg2 + this.paragraphTopPadding;
-		} else if (arg8 == 1) {
-			local57 = arg2 + this.paragraphTopPadding + (arg4 - this.paragraphTopPadding - this.paragraphBottomPadding - (local42 - 1) * arg9) / 2;
-		} else if (arg8 == 2) {
-			local57 = arg2 + arg4 - this.paragraphBottomPadding - (local42 - 1) * arg9;
+		} else if (width == 1) {
+			local57 = arg2 + this.paragraphTopPadding + (lineCount - this.paragraphTopPadding - this.paragraphBottomPadding - (local42 - 1) * height) / 2;
+		} else if (width == 2) {
+			local57 = arg2 + lineCount - this.paragraphBottomPadding - (local42 - 1) * height;
 		} else {
-			local118 = (arg4 - this.paragraphTopPadding - this.paragraphBottomPadding - (local42 - 1) * arg9) / (local42 + 1);
+			local118 = (lineCount - this.paragraphTopPadding - this.paragraphBottomPadding - (local42 - 1) * height) / (local42 + 1);
 			if (local118 < 0) {
 				local118 = 0;
 			}
 			local57 = arg2 + this.paragraphTopPadding + local118;
-			arg9 += local118;
+			height += local118;
 		}
 		for (local118 = 0; local118 < local42; local118++) {
 			if (arg7 == 0) {
 				this.render(lines[local118], arg1, local57);
 			} else if (arg7 == 1) {
-				this.render(lines[local118], arg1 + (arg3 - this.getStringWidth(lines[local118])) / 2, local57);
+				this.render(lines[local118], arg1 + (lineWidth - this.getStringWidth(lines[local118])) / 2, local57);
 			} else if (arg7 == 2) {
-				this.render(lines[local118], arg1 + arg3 - this.getStringWidth(lines[local118]), local57);
+				this.render(lines[local118], arg1 + lineWidth - this.getStringWidth(lines[local118]), local57);
 			} else if (local118 == local42 - 1) {
 				this.render(lines[local118], arg1, local57);
 			} else {
-				this.justify(lines[local118], arg3);
+				this.justify(lines[local118], lineWidth);
 				this.render(lines[local118], arg1, local57);
 				spaceWidth = 0;
 			}
-			local57 += arg9;
+			local57 += height;
 		}
 		return local42;
 	}
@@ -833,15 +833,15 @@ public abstract class Font extends SecondaryNode {
 	}
 
 	@OriginalMember(owner = "client!rk", name = "a", descriptor = "(III)V")
-	private void setColors(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1, @OriginalArg(2) int arg2) {
+	private void setColors(@OriginalArg(0) int color, @OriginalArg(1) int shadow, @OriginalArg(2) int alpha) {
 		strikethroughColor = -1;
 		underlineColor = -1;
-		shadowColor = arg1;
-		shadowColorOverride = arg1;
-		color = arg0;
-		colorOverride = arg0;
-		alpha = arg2;
-		alphaOverride = arg2;
+		shadowColor = shadow;
+		shadowColorOverride = shadow;
+		Font.color = color;
+		colorOverride = color;
+		Font.alpha = alpha;
+		alphaOverride = alpha;
 		spaceWidth = 0;
 		extraSpaceWidth = 0;
 	}

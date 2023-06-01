@@ -701,6 +701,10 @@ public final class Component {
 			if (this.font == 65535) {
 				this.font = -1;
 			}
+			if (this.id == 24379392 || this.id == 24379393 || this.id == 24379394 || this.id == 24379395 || this.id == 24379396) {
+				this.font = 496;
+			}
+			System.out.println("Parsed font for interface " + this.id + " as " + this.font);
 			this.shadowed = buffer.g1() == 1;
 		}
 		if (this.type == 4) {
@@ -752,6 +756,11 @@ public final class Component {
 			if (this.font == 65535) {
 				this.font = -1;
 			}
+			if (this.id == 24379392 || this.id == 24379393 || this.id == 24379394 || this.id == 24379395 || this.id == 24379396) {
+				this.font = 496;
+			}
+			System.out.println("Parsed font for interface " + this.id + " as " + this.font);
+
 			this.shadowed = buffer.g1() == 1;
 			this.color = buffer.g4();
 			this.invMarginX = buffer.g2b();
@@ -828,18 +837,18 @@ public final class Component {
 	}
 
 	@OriginalMember(owner = "client!be", name = "b", descriptor = "(ILclient!wa;)[Ljava/lang/Object;")
-	private Object[] loadObject(@OriginalArg(1) Buffer arg0) {
-		@Pc(11) int local11 = arg0.g1();
-		if (local11 == 0) {
+	private Object[] loadObject(@OriginalArg(1) Buffer buffer) {
+		@Pc(11) int first = buffer.g1();
+		if (first == 0) {
 			return null;
 		}
-		@Pc(26) Object[] obj = new Object[local11];
-		for (@Pc(28) int i = 0; i < local11; i++) {
-			@Pc(35) int local35 = arg0.g1();
-			if (local35 == 0) {
-				obj[i] = Integer.valueOf(arg0.g4());
-			} else if (local35 == 1) {
-				obj[i] = arg0.gjstr();
+		@Pc(26) Object[] obj = new Object[first];
+		for (@Pc(28) int i = 0; i < first; i++) {
+			@Pc(35) int next = buffer.g1();
+			if (next == 0) {
+				obj[i] = Integer.valueOf(buffer.g4());
+			} else if (next == 1) {
+				obj[i] = buffer.gjstr();
 			}
 		}
 		this.aBoolean25 = true;
@@ -847,16 +856,16 @@ public final class Component {
 	}
 
 	@OriginalMember(owner = "client!be", name = "a", descriptor = "(Lclient!wa;Z)[I")
-	private int[] method486(@OriginalArg(0) Buffer arg0) {
-		@Pc(9) int local9 = arg0.g1();
-		if (local9 == 0) {
+	private int[] loadInt(@OriginalArg(0) Buffer buffer) {
+		@Pc(9) int next = buffer.g1();
+		if (next == 0) {
 			return null;
 		}
-		@Pc(19) int[] local19 = new int[local9];
-		for (@Pc(26) int i = 0; i < local9; i++) {
-			local19[i] = arg0.g4();
+		@Pc(19) int[] data = new int[next];
+		for (@Pc(26) int i = 0; i < next; i++) {
+			data[i] = buffer.g4();
 		}
-		return local19;
+		return data;
 	}
 
 	@OriginalMember(owner = "client!be", name = "b", descriptor = "(III)V")
@@ -959,59 +968,59 @@ public final class Component {
 	}
 
 	@OriginalMember(owner = "client!be", name = "a", descriptor = "(BZ)Lclient!qf;")
-	public final Sprite method489(@OriginalArg(1) boolean arg0) {
+	public final Sprite getSprite(@OriginalArg(1) boolean active) {
 		shouldRedraw = false;
-		@Pc(12) int local12;
-		if (arg0) {
-			local12 = this.activeSpriteId;
+		@Pc(12) int spriteId;
+		if (active) {
+			spriteId = this.activeSpriteId;
 		} else {
-			local12 = this.spriteId;
+			spriteId = this.spriteId;
 		}
-		if (local12 == -1) {
+		if (spriteId == -1) {
 			return null;
 		}
-		@Pc(66) long local66 = ((this.vFlip ? 1L : 0L) << 38) + ((this.hasAlpha ? 1L : 0L) << 35) + (long) local12 + ((long) this.outlineThickness << 36) + ((this.hFlip ? 1L : 0L) << 39) + ((long) this.shadowColor << 40);
-		@Pc(72) Sprite local72 = (Sprite) sprites.get(local66);
-		if (local72 != null) {
-			return local72;
+		@Pc(66) long local66 = ((this.vFlip ? 1L : 0L) << 38) + ((this.hasAlpha ? 1L : 0L) << 35) + (long) spriteId + ((long) this.outlineThickness << 36) + ((this.hFlip ? 1L : 0L) << 39) + ((long) this.shadowColor << 40);
+		@Pc(72) Sprite cachedSprite = (Sprite) sprites.get(local66);
+		if (cachedSprite != null) {
+			return cachedSprite;
 		}
-		@Pc(85) SoftwareSprite local85;
+		@Pc(85) SoftwareSprite softSprite;
 		if (this.hasAlpha) {
-			local85 = SoftwareSprite.loadSoftwareAlphaSprite(InterfaceList.js5Archive8, local12);
+			softSprite = SoftwareSprite.loadSoftwareAlphaSprite(InterfaceList.js5Archive8, spriteId);
 		} else {
-			local85 = SpriteLoader.loadSoftwareSprite(0, InterfaceList.js5Archive8, local12);
+			softSprite = SpriteLoader.loadSoftwareSprite(0, InterfaceList.js5Archive8, spriteId);
 		}
-		if (local85 == null) {
+		if (softSprite == null) {
 			shouldRedraw = true;
 			return null;
 		}
 		if (this.vFlip) {
-			local85.method309();
+			softSprite.method309();
 		}
 		if (this.hFlip) {
-			local85.method299();
+			softSprite.method299();
 		}
 		if (this.outlineThickness > 0) {
-			local85.method298(this.outlineThickness);
+			softSprite.method298(this.outlineThickness);
 		}
 		if (this.outlineThickness >= 1) {
-			local85.drawOutline(1);
+			softSprite.drawOutline(1);
 		}
 		if (this.outlineThickness >= 2) {
-			local85.drawOutline(16777215);
+			softSprite.drawOutline(16777215);
 		}
 		if (this.shadowColor != 0) {
-			local85.drawShadow(this.shadowColor);
+			softSprite.drawShadow(this.shadowColor);
 		}
 		if (!GlRenderer.enabled) {
-			local72 = local85;
-		} else if (local85 instanceof SoftwareAlphaSprite) {
-			local72 = new GlAlphaSprite(local85);
+			cachedSprite = softSprite;
+		} else if (softSprite instanceof SoftwareAlphaSprite) {
+			cachedSprite = new GlAlphaSprite(softSprite);
 		} else {
-			local72 = new GlSprite(local85);
+			cachedSprite = new GlSprite(softSprite);
 		}
-		sprites.put(local72, local66);
-		return local72;
+		sprites.put(cachedSprite, local66);
+		return cachedSprite;
 	}
 
 	@OriginalMember(owner = "client!be", name = "c", descriptor = "(ILclient!wa;)V")
@@ -1089,6 +1098,10 @@ public final class Component {
 			if (this.font == 65535) {
 				this.font = -1;
 			}
+			if (this.id == 24379392 || this.id == 24379393 || this.id == 24379394 || this.id == 24379395 || this.id == 24379396) {
+				this.font = 496;
+			}
+			System.out.println("Parsed font for interface " + this.id + " as " + this.font);
 			this.text = buffer.gjstr();
 			this.vpadding = buffer.g1();
 			this.halign = buffer.g1();
@@ -1190,11 +1203,11 @@ public final class Component {
 		this.onScroll = this.loadObject(buffer);
 		this.onVarcTransmit = this.loadObject(buffer);
 		this.onVarcstrTransmit = this.loadObject(buffer);
-		this.varpTriggers = this.method486(buffer);
-		this.inventoryTriggers = this.method486(buffer);
-		this.statTriggers = this.method486(buffer);
-		this.varcTriggers = this.method486(buffer);
-		this.varcstrTriggers = this.method486(buffer);
+		this.varpTriggers = this.loadInt(buffer);
+		this.inventoryTriggers = this.loadInt(buffer);
+		this.statTriggers = this.loadInt(buffer);
+		this.varcTriggers = this.loadInt(buffer);
+		this.varcstrTriggers = this.loadInt(buffer);
 	}
 
 	@OriginalMember(owner = "client!be", name = "a", descriptor = "([Lclient!ok;I)Lclient!rk;")
@@ -1203,17 +1216,17 @@ public final class Component {
 		if (this.font == -1) {
 			return null;
 		}
-		@Pc(21) Font local21 = (Font) fonts.get(this.font);
-		if (local21 != null) {
-			return local21;
+		@Pc(21) Font font = (Font) fonts.get(this.font);
+		if (font != null) {
+			return font;
 		}
-		local21 = Font.method2462(this.font, InterfaceList.js5Archive8, InterfaceList.js5Archive13);
-		if (local21 == null) {
+		font = Font.loadFont(this.font, InterfaceList.js5Archive8, InterfaceList.js5Archive13);
+		if (font == null) {
 			shouldRedraw = true;
 		} else {
-			local21.setNameIcons(sprites, null);
-			fonts.put(local21, this.font);
+			font.setNameIcons(sprites, null);
+			fonts.put(font, this.font);
 		}
-		return local21;
+		return font;
 	}
 }

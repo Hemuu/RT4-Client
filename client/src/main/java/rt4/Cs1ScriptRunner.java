@@ -784,7 +784,7 @@ public class Cs1ScriptRunner {
 										@Pc(2094) Sprite sprite = null;
 										if (component.if3) {
 											if (component.objId == -1) {
-												sprite = component.method489(false);
+												sprite = component.getSprite(false);
 											} else {
 												sprite = Inv.getObjectSprite(component.outlineThickness, component.objId, component.objDrawText, component.objCount, component.shadowColor);
 											}
@@ -877,7 +877,7 @@ public class Cs1ScriptRunner {
 												InterfaceList.redraw(component);
 											}
 										} else {
-											sprite = component.method489(isTrue(component));
+											sprite = component.getSprite(isTrue(component));
 											if (sprite != null) {
 												sprite.render(local123, local114);
 											} else if (Component.shouldRedraw) {
@@ -1149,7 +1149,7 @@ public class Cs1ScriptRunner {
 		}
 		if (MiniMap.state >= 3) {
 			if (GlRenderer.enabled) {
-				@Pc(44) Sprite local44 = arg2.method489(false);
+				@Pc(44) Sprite local44 = arg2.getSprite(false);
 				if (local44 != null) {
 					local44.render(arg0, arg1);
 				}
@@ -1157,7 +1157,7 @@ public class Cs1ScriptRunner {
 				SoftwareRaster.method2504(arg0, arg1, arg2.anIntArray37, arg2.anIntArray45);
 			}
 		} else if (GlRenderer.enabled) {
-			((GlSprite) Sprites.compass).renderRotatedTransparent(arg0, arg1, arg2.width, arg2.height, Sprites.compass.width / 2, Sprites.compass.height / 2, (int) Camera.yawTarget, 256, (GlSprite) arg2.method489(false));
+			((GlSprite) Sprites.compass).renderRotatedTransparent(arg0, arg1, arg2.width, arg2.height, Sprites.compass.width / 2, Sprites.compass.height / 2, (int) Camera.yawTarget, 256, (GlSprite) arg2.getSprite(false));
 		} else {
 			((SoftwareSprite) Sprites.compass).renderRotated(arg0, arg1, arg2.width, arg2.height, Sprites.compass.width / 2, Sprites.compass.height / 2, (int) Camera.yawTarget, arg2.anIntArray37, arg2.anIntArray45);
 		}
