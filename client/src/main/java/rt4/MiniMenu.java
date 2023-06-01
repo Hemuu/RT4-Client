@@ -1692,10 +1692,10 @@ public class MiniMenu {
 
 	@OriginalMember(owner = "client!lf", name = "b", descriptor = "(I)V")
 	public static void drawA() {
-		@Pc(3) int local3 = InterfaceList.anInt5138;
-		@Pc(9) int local9 = InterfaceList.anInt761;
-		@Pc(11) int local11 = InterfaceList.anInt4271;
-		@Pc(15) int local15 = InterfaceList.anInt436;
+		@Pc(3) int local3 = InterfaceList.height;
+		@Pc(9) int local9 = InterfaceList.opWidth;
+		@Pc(11) int local11 = InterfaceList.width;
+		@Pc(15) int local15 = InterfaceList.opHeight;
 		if (GlRenderer.enabled) {
 			GlRaster.fillRect(local11, local3, local9, local15, 6116423);
 			GlRaster.fillRect(local11 + 1, local3 + 1, local9 - 2, 16, 0);
@@ -1716,15 +1716,15 @@ public class MiniMenu {
 			}
 			Fonts.b12Full.renderLeft(getOp(local107), local11 + 3, local127, color, 0);
 		}
-		InterfaceList.forceRedrawScreen(InterfaceList.anInt4271, InterfaceList.anInt5138, InterfaceList.anInt436, InterfaceList.anInt761);
+		InterfaceList.forceRedrawScreen(InterfaceList.width, InterfaceList.height, InterfaceList.opHeight, InterfaceList.opWidth);
 	}
 
 	@OriginalMember(owner = "client!ij", name = "a", descriptor = "(B)V")
 	public static void drawB() {
-		@Pc(3) int local3 = InterfaceList.anInt4271;
-		@Pc(9) int local9 = InterfaceList.anInt5138;
-		@Pc(11) int local11 = InterfaceList.anInt436;
-		@Pc(13) int local13 = InterfaceList.anInt761;
+		@Pc(3) int local3 = InterfaceList.width;
+		@Pc(9) int local9 = InterfaceList.height;
+		@Pc(11) int local11 = InterfaceList.opHeight;
+		@Pc(13) int local13 = InterfaceList.opWidth;
 		if (LoginManager.aClass3_Sub2_Sub1_1 == null || LoginManager.aClass3_Sub2_Sub1_9 == null) {
 			if (client.js5Archive8.isFileReady(LoginManager.anInt1736) && client.js5Archive8.isFileReady(LoginManager.anInt4073)) {
 				LoginManager.aClass3_Sub2_Sub1_1 = SoftwareSprite.loadSoftwareAlphaSprite(client.js5Archive8, LoginManager.anInt1736);
@@ -1821,6 +1821,6 @@ public class MiniMenu {
 			}
 			Fonts.b12Full.renderLeft(getOp(local203), local3 + 3, local219, local418, 0);
 		}
-		InterfaceList.forceRedrawScreen(InterfaceList.anInt4271, InterfaceList.anInt5138, InterfaceList.anInt436, InterfaceList.anInt761);
+		InterfaceList.forceRedrawScreen(InterfaceList.width, InterfaceList.height, InterfaceList.opHeight, InterfaceList.opWidth);
 	}
 }

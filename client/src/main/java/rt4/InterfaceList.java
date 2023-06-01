@@ -70,11 +70,11 @@ public class InterfaceList {
 	@OriginalMember(owner = "client!ef", name = "r", descriptor = "Lclient!be;")
 	public static Component aClass13_12 = null;
 	@OriginalMember(owner = "client!bn", name = "O", descriptor = "I")
-	public static int anInt761;
+	public static int opWidth;
 	@OriginalMember(owner = "client!bc", name = "X", descriptor = "I")
-	public static int anInt436;
+	public static int opHeight;
 	@OriginalMember(owner = "client!si", name = "ab", descriptor = "I")
-	public static int anInt5138;
+	public static int height;
 	@OriginalMember(owner = "client!sh", name = "f", descriptor = "I")
 	public static int anInt5103 = -1;
 	@OriginalMember(owner = "client!gd", name = "j", descriptor = "I")
@@ -84,7 +84,7 @@ public class InterfaceList {
 	@OriginalMember(owner = "client!og", name = "e", descriptor = "Lclient!be;")
 	public static Component aClass13_22;
 	@OriginalMember(owner = "client!ok", name = "b", descriptor = "I")
-	public static int anInt4271;
+	public static int width;
 	@OriginalMember(owner = "client!lg", name = "b", descriptor = "Z")
 	public static boolean aBoolean174 = false;
 	@OriginalMember(owner = "client!ac", name = "n", descriptor = "I")
@@ -197,23 +197,22 @@ public class InterfaceList {
 
 	@OriginalMember(owner = "client!i", name = "i", descriptor = "(Z)V")
 	public static void redrawActiveInterfaces() {
-		for (@Pc(6) ComponentPointer local6 = (ComponentPointer) openInterfaces.head(); local6 != null; local6 = (ComponentPointer) openInterfaces.next()) {
-			@Pc(14) int local14 = local6.interfaceId;
-			if (load(local14)) {
-				@Pc(21) boolean local21 = true;
-				@Pc(25) Component[] local25 = components[local14];
-				@Pc(27) int local27;
-				for (local27 = 0; local27 < local25.length; local27++) {
-					if (local25[local27] != null) {
-						local21 = local25[local27].if3;
+		for (@Pc(6) ComponentPointer ptr = (ComponentPointer) openInterfaces.head(); ptr != null; ptr = (ComponentPointer) openInterfaces.next()) {
+			@Pc(14) int interfaceId = ptr.interfaceId;
+			if (load(interfaceId)) {
+				@Pc(21) boolean if3 = true;
+				@Pc(25) Component[] subComponents = components[interfaceId];
+				for (int i = 0; i < subComponents.length; i++) {
+					if (subComponents[i] != null) {
+						if3 = subComponents[i].if3;
 						break;
 					}
 				}
-				if (!local21) {
-					local27 = (int) local6.key;
-					@Pc(60) Component local60 = getComponent(local27);
-					if (local60 != null) {
-						redraw(local60);
+				if (!if3) {
+					int key = (int) ptr.key;
+					@Pc(60) Component component = getComponent(key);
+					if (component != null) {
+						redraw(component);
 					}
 				}
 			}
@@ -251,9 +250,9 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!dg", name = "a", descriptor = "(ILclient!be;)V")
-	public static void redraw(@OriginalArg(1) Component arg0) {
-		if (anInt4311 == arg0.rectangleLoop) {
-			aBooleanArray100[arg0.rectangle] = true;
+	public static void redraw(@OriginalArg(1) Component component) {
+		if (anInt4311 == component.rectangleLoop) {
+			aBooleanArray100[component.rectangle] = true;
 		}
 	}
 
@@ -281,17 +280,17 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!gg", name = "e", descriptor = "(II)V")
-	public static void method1753(@OriginalArg(0) int arg0) {
-		if (!load(arg0)) {
+	public static void method1753(@OriginalArg(0) int interfaceId) {
+		if (!load(interfaceId)) {
 			return;
 		}
-		@Pc(15) Component[] local15 = components[arg0];
-		for (@Pc(17) int local17 = 0; local17 < local15.length; local17++) {
-			@Pc(29) Component local29 = local15[local17];
-			if (local29 != null) {
-				local29.anInt496 = 1;
-				local29.anInt510 = 0;
-				local29.anInt500 = 0;
+		@Pc(15) Component[] subComponents = components[interfaceId];
+		for (@Pc(17) int i = 0; i < subComponents.length; i++) {
+			@Pc(29) Component component = subComponents[i];
+			if (component != null) {
+				component.anInt496 = 1;
+				component.anInt510 = 0;
+				component.anInt500 = 0;
 			}
 		}
 	}
@@ -349,7 +348,7 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!fn", name = "c", descriptor = "(II)V")
-	public static void method1626(@OriginalArg(0) int interfaceId) {
+	public static void runHooks(@OriginalArg(0) int interfaceId) {
 		if (interfaceId == -1 || !load(interfaceId)) {
 			return;
 		}
@@ -386,9 +385,9 @@ public class InterfaceList {
 		}
 		if (MiniMenu.size == 1) {
 			Cs1ScriptRunner.aBoolean108 = false;
-			redrawScreen(anInt4271, anInt761, anInt5138, anInt436);
+			redrawScreen(width, opWidth, height, opHeight);
 		} else {
-			redrawScreen(anInt4271, anInt761, anInt5138, anInt436);
+			redrawScreen(width, opWidth, height, opHeight);
 			int textWidth = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
 			for (@Pc(75) int i = 0; i < MiniMenu.size; i++) {
 				@Pc(88) int optionWidth = Fonts.b12Full.getStringWidth(MiniMenu.getOp(i));
@@ -396,8 +395,8 @@ public class InterfaceList {
 					textWidth = optionWidth;
 				}
 			}
-			anInt436 = MiniMenu.size * 15 + (aBoolean298 ? 26 : 22);
-			anInt761 = textWidth + 8;
+			opHeight = MiniMenu.size * 15 + (aBoolean298 ? 26 : 22);
+			opWidth = textWidth + 8;
 		}
 		if (topLevelInterface != -1) {
 			runScripts(1, topLevelInterface);
@@ -539,10 +538,10 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!kf", name = "a", descriptor = "(IIBII)V")
-	public static void redrawScreen(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1, @OriginalArg(3) int arg2, @OriginalArg(4) int arg3) {
-		for (@Pc(12) int local12 = 0; local12 < rectangles; local12++) {
-			if (rectangleWidth[local12] + rectangleX[local12] > arg0 && arg1 + arg0 > rectangleX[local12] && arg2 < rectangleHeight[local12] + rectangleY[local12] && rectangleY[local12] < arg2 + arg3) {
-				aBooleanArray100[local12] = true;
+	public static void redrawScreen(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1, @OriginalArg(3) int height, @OriginalArg(4) int arg3) {
+		for (@Pc(12) int i = 0; i < rectangles; i++) {
+			if (rectangleWidth[i] + rectangleX[i] > arg0 && arg1 + arg0 > rectangleX[i] && height < rectangleHeight[i] + rectangleY[i] && rectangleY[i] < height + arg3) {
+				aBooleanArray100[i] = true;
 			}
 		}
 	}
@@ -1053,15 +1052,15 @@ public class InterfaceList {
 	}
 
 	@OriginalMember(owner = "client!aa", name = "a", descriptor = "(SI)Z")
-	public static boolean method5(@OriginalArg(0) short arg0) {
-		if (arg0 == 47 || arg0 == 5 || arg0 == 43 || arg0 == 35 || arg0 == 58 || arg0 == 22 || arg0 == 40 || arg0 == 3) {
+	public static boolean method5(@OriginalArg(0) short action) {
+		if (action == 47 || action == 5 || action == 43 || action == 35 || action == 58 || action == 22 || action == 40 || action == 3) {
 			return true;
-		} else if (arg0 == 9 || arg0 == 12 || arg0 == 1006 || arg0 == 1003) {
+		} else if (action == 9 || action == 12 || action == 1006 || action == 1003) {
 			return true;
-		} else if (arg0 == 25 || arg0 == 23 || arg0 == 48 || arg0 == 7 || arg0 == 13) {
+		} else if (action == 25 || action == 23 || action == 48 || action == 7 || action == 13) {
 			return true;
 		} else {
-			return arg0 == 8 || arg0 == 32 || arg0 == 28 || arg0 == 59 || arg0 == 51 || arg0 == 41;
+			return action == 8 || action == 32 || action == 28 || action == 59 || action == 51 || action == 41;
 		}
 	}
 
@@ -1080,7 +1079,7 @@ public class InterfaceList {
 			topLevelInterface = LoginManager.loginScreenId;
 			method3712(false);
 			ScriptRunner.method1807();
-			method1626(topLevelInterface);
+			runHooks(topLevelInterface);
 		}
 		MiniMenu.anInt1092 = -1;
 		method1750(ScriptRunner.anInt5794);

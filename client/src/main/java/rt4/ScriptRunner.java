@@ -1438,46 +1438,46 @@ public final class ScriptRunner {
 
 	@OriginalMember(owner = "client!sf", name = "b", descriptor = "(B)V")
 	public static void method3901() {
-		@Pc(16) int local16 = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
-		@Pc(18) int local18;
-		@Pc(27) int local27;
-		for (local18 = 0; local18 < MiniMenu.size; local18++) {
-			local27 = Fonts.b12Full.getStringWidth(MiniMenu.getOp(local18));
-			if (local27 > local16) {
-				local16 = local27;
+		@Pc(16) int width = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
+		@Pc(18) int size;
+		@Pc(27) int opWidth;
+		for (int i = 0; i < MiniMenu.size; i++) {
+			opWidth = Fonts.b12Full.getStringWidth(MiniMenu.getOp(i));
+			if (opWidth > width) {
+				width = opWidth;
 			}
 		}
-		local18 = MiniMenu.size * 15 + 21;
-		@Pc(43) int local43 = anInt1892;
-		local16 += 8;
-		local27 = anInt3751 - local16 / 2;
-		if (local43 + local18 > GameShell.canvasHeight) {
-			local43 = GameShell.canvasHeight - local18;
+		size = MiniMenu.size * 15 + 21;
+		@Pc(43) int height = anInt1892;
+		width += 8;
+		opWidth = anInt3751 - width / 2;
+		if (height + size > GameShell.canvasHeight) {
+			height = GameShell.canvasHeight - size;
 		}
-		if (GameShell.canvasWidth < local27 + local16) {
-			local27 = GameShell.canvasWidth - local16;
+		if (GameShell.canvasWidth < opWidth + width) {
+			opWidth = GameShell.canvasWidth - width;
 		}
-		if (local27 < 0) {
-			local27 = 0;
+		if (opWidth < 0) {
+			opWidth = 0;
 		}
-		if (local43 < 0) {
-			local43 = 0;
+		if (height < 0) {
+			height = 0;
 		}
 		if (MiniMenu.anInt3953 == 1) {
 			if (anInt3751 == Mouse.anInt5850 && Mouse.anInt5895 == anInt1892) {
-				InterfaceList.anInt436 = MiniMenu.size * 15 + (InterfaceList.aBoolean298 ? 26 : 22);
+				InterfaceList.opHeight = MiniMenu.size * 15 + (InterfaceList.aBoolean298 ? 26 : 22);
 				MiniMenu.anInt3953 = 0;
-				InterfaceList.anInt5138 = local43;
-				InterfaceList.anInt4271 = local27;
+				InterfaceList.height = height;
+				InterfaceList.width = opWidth;
 				Cs1ScriptRunner.aBoolean108 = true;
-				InterfaceList.anInt761 = local16;
+				InterfaceList.opWidth = width;
 			}
 		} else if (anInt3751 == Mouse.clickX && anInt1892 == Mouse.clickY) {
-			InterfaceList.anInt4271 = local27;
+			InterfaceList.width = opWidth;
 			MiniMenu.anInt3953 = 0;
-			InterfaceList.anInt761 = local16;
-			InterfaceList.anInt5138 = local43;
-			InterfaceList.anInt436 = (InterfaceList.aBoolean298 ? 26 : 22) + MiniMenu.size * 15;
+			InterfaceList.opWidth = width;
+			InterfaceList.height = height;
+			InterfaceList.opHeight = (InterfaceList.aBoolean298 ? 26 : 22) + MiniMenu.size * 15;
 			Cs1ScriptRunner.aBoolean108 = true;
 		} else {
 			Mouse.anInt5895 = Mouse.clickY;

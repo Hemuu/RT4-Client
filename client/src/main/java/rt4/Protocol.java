@@ -1276,7 +1276,7 @@ public class Protocol {
 			InterfaceList.topLevelInterface = parent;
 			InterfaceList.method1753(parent);
 			InterfaceList.method3712(false);
-			InterfaceList.method1626(InterfaceList.topLevelInterface);
+			InterfaceList.runHooks(InterfaceList.topLevelInterface);
 			for (int i = 0; i < 100; i++) {
 				InterfaceList.aBooleanArray100[i] = true;
 			}
@@ -3487,32 +3487,30 @@ public class Protocol {
 			InterfaceList.redraw(Cs1ScriptRunner.aClass13_10);
 			Cs1ScriptRunner.aClass13_10 = null;
 		}
-		@Pc(45) int local45 = MiniMenu.size;
-		@Pc(53) int i;
-		for (i = 0; i < local45; i++) {
+		for (int i = 0; i < MiniMenu.size; i++) {
 			if (InterfaceList.method5(MiniMenu.actions[i])) {
 				MiniMenu.remove(i);
 			}
 		}
 		if (MiniMenu.size == 1) {
 			Cs1ScriptRunner.aBoolean108 = false;
-			InterfaceList.redrawScreen(InterfaceList.anInt4271, InterfaceList.anInt761, InterfaceList.anInt5138, InterfaceList.anInt436);
+			InterfaceList.redrawScreen(InterfaceList.width, InterfaceList.opWidth, InterfaceList.height, InterfaceList.opHeight);
 		} else {
-			InterfaceList.redrawScreen(InterfaceList.anInt4271, InterfaceList.anInt761, InterfaceList.anInt5138, InterfaceList.anInt436);
+			InterfaceList.redrawScreen(InterfaceList.width, InterfaceList.opWidth, InterfaceList.height, InterfaceList.opHeight);
 			int option = Fonts.b12Full.getStringWidth(LocalizedText.CHOOSE_OPTION);
-			for (@Pc(95) int local95 = 0; local95 < MiniMenu.size; local95++) {
-				@Pc(104) int local104 = Fonts.b12Full.getStringWidth(MiniMenu.getOp(local95));
-				if (local104 > option) {
-					option = local104;
+			for (@Pc(95) int i = 0; i < MiniMenu.size; i++) {
+				@Pc(104) int opWidth = Fonts.b12Full.getStringWidth(MiniMenu.getOp(i));
+				if (opWidth > option) {
+					option = opWidth;
 				}
 			}
-			InterfaceList.anInt761 = option + 8;
-			InterfaceList.anInt436 = MiniMenu.size * 15 + (InterfaceList.aBoolean298 ? 26 : 22);
+			InterfaceList.opWidth = option + 8;
+			InterfaceList.opHeight = MiniMenu.size * 15 + (InterfaceList.aBoolean298 ? 26 : 22);
 		}
 		if (component != null) {
 			InterfaceList.method531(component, false);
 		}
-		InterfaceList.method1626(interfaceId);
+		InterfaceList.runHooks(interfaceId);
 		if (InterfaceList.topLevelInterface != -1) {
 			InterfaceList.runScripts(1, InterfaceList.topLevelInterface);
 		}
@@ -3565,17 +3563,17 @@ public class Protocol {
 		if (local20 != 1) {
 			local93 = Mouse.lastMouseY;
 			local204 = Mouse.lastMouseX;
-			if (local204 < InterfaceList.anInt4271 - 10 || local204 > InterfaceList.anInt761 + InterfaceList.anInt4271 + 10 || InterfaceList.anInt5138 - 10 > local93 || local93 > InterfaceList.anInt436 + InterfaceList.anInt5138 + 10) {
+			if (local204 < InterfaceList.width - 10 || local204 > InterfaceList.opWidth + InterfaceList.width + 10 || InterfaceList.height - 10 > local93 || local93 > InterfaceList.opHeight + InterfaceList.height + 10) {
 				Cs1ScriptRunner.aBoolean108 = false;
-				InterfaceList.redrawScreen(InterfaceList.anInt4271, InterfaceList.anInt761, InterfaceList.anInt5138, InterfaceList.anInt436);
+				InterfaceList.redrawScreen(InterfaceList.width, InterfaceList.opWidth, InterfaceList.height, InterfaceList.opHeight);
 			}
 		}
 		if (local20 != 1) {
 			return;
 		}
-		local204 = InterfaceList.anInt4271;
-		local93 = InterfaceList.anInt5138;
-		local99 = InterfaceList.anInt761;
+		local204 = InterfaceList.width;
+		local93 = InterfaceList.height;
+		local99 = InterfaceList.opWidth;
 		@Pc(265) int local265 = Mouse.clickX;
 		@Pc(267) int local267 = Mouse.clickY;
 		@Pc(269) int local269 = -1;
@@ -3594,6 +3592,6 @@ public class Protocol {
 			MiniMenu.doAction(local269);
 		}
 		Cs1ScriptRunner.aBoolean108 = false;
-		InterfaceList.redrawScreen(InterfaceList.anInt4271, InterfaceList.anInt761, InterfaceList.anInt5138, InterfaceList.anInt436);
+		InterfaceList.redrawScreen(InterfaceList.width, InterfaceList.opWidth, InterfaceList.height, InterfaceList.opHeight);
 	}
 }
