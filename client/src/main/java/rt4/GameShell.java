@@ -515,7 +515,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			partialRedraws -= 50;
 			canvas.setSize(canvasWidth, canvasHeight);
 			canvas.setVisible(true);
-			canvasScale = getCurrentDevice().getDefaultConfiguration().getDefaultTransform().getScaleX();
+			GraphicsDevice monitor = getCurrentDevice();
+			if (monitor != null) {
+				canvasScale = monitor.getDefaultConfiguration().getDefaultTransform().getScaleX();
+			}
 			if (frame != null && fullScreenFrame == null) {
 				@Pc(84) Insets insets = frame.getInsets();
 				canvas.setLocation(insets.left + leftMargin, topMargin + insets.top);
